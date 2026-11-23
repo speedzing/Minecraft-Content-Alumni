@@ -23,6 +23,12 @@
   .gallery { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
   .gallery img { height: 80px; width: auto; }
   pre { overflow-x: auto; font-size: .75rem; background: #8881; padding: 8px; }
+  #submit { border: 1px solid #8884; padding: 12px; margin-bottom: 16px; }
+  #submit h2 { font-size: 1rem; margin: 0 0 4px; }
+  #submit textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; min-height: 64px; }
+  #submit button { font: inherit; padding: 6px 14px; margin-top: 6px; cursor: pointer; }
+  #submit-status { font-size: .9rem; margin: 6px 0 0; }
+  #recent { font-size: .85rem; margin: 8px 0 0; padding-left: 18px; }
   @media (max-width: 560px) { .title { grid-template-columns: 1fr; } .title img { width: 140px; } }
 </style>
 </head>
@@ -31,6 +37,16 @@
   <h1>Minecraft Content Alumni — Title Database</h1>
   <p class="meta" id="meta">Loading…</p>
 </header>
+<section id="submit">
+  <h2>Submit a title</h2>
+  <p class="meta">Paste IMDb links (one per line, up to 10). You'll confirm on GitHub, then the title is fetched and added automatically within a few minutes.</p>
+  <form id="submit-form">
+    <textarea id="submit-links" placeholder="https://www.imdb.com/title/tt48403578/" aria-label="IMDb links"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+  <p id="submit-status" role="status"></p>
+  <details><summary class="meta">Recent submissions</summary><ul id="recent"><li class="muted">Loading…</li></ul></details>
+</section>
 <input id="q" type="search" placeholder="Filter by title, person, genre, studio…" aria-label="Filter titles">
 <p class="meta">Raw data: <a href="database/titles.json">database/titles.json</a></p>
 <main id="list"></main>
@@ -45,7 +61,7 @@ function render(t) {
   const cast = t.cast.map(c => `<li>${esc(c.name)}${c.characters.length ? ' — ' + esc(c.characters.join(' / ')) : ''}${c.creditedAs ? ' <span class="muted">(' + esc(c.creditedAs) + ')</span>' : ''}</li>`).join('');
   const gallery = t.gallery.map(g => `<a href="${esc(g.url)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(g.url.replace('._V1_.jpg', '._V1_UY160_.jpg'))}" alt="${esc(g.caption)}" title="${esc(g.caption)}"></a>`).join('');
   return `<article class="title" data-search="${esc(JSON.stringify(t).toLowerCase())}">
-    <a href="${esc(t.poster.local)}" target="_blank"><img loading="lazy" src="${esc(t.poster.local)}" alt="${esc(t.title)} poster"></a>
+    ${t.poster?.local ? `<a href="${esc(t.poster.local)}" target="_blank"><img loading="lazy" src="${esc(t.poster.local)}" alt="${esc(t.title)} poster"></a>` : '<div class="muted">No poster</div>'}
     <div>
       <h2>${esc(t.title)} <span class="muted">(${esc(yrs)})</span></h2>
       <p class="muted">${esc(t.titleType)}${t.runtimeMinutes ? ' · ' + t.runtimeMinutes + ' min' : ''}${t.certificate ? ' · ' + esc(t.certificate) : ''} · ${esc(t.genres.join(', '))}</p>
@@ -62,6 +78,7 @@ function render(t) {
         ${t.episodes ? `<dt>Episodes</dt><dd>${t.episodes.total} across ${t.episodes.seasons.length} season(s)</dd>` : ''}
         <dt>Country / language</dt><dd>${esc(t.countries.join(', '))} · ${esc(t.languages.join(', '))}</dd>
         ${t.keywords.length ? `<dt>Keywords</dt><dd>${esc(t.keywords.join(', '))}</dd>` : ''}
+        ${t.submission ? `<dt>Submitted</dt><dd><a href="https://github.com/${REPO}/issues/${t.submission.issue}" target="_blank" rel="noopener">#${t.submission.issue}</a>${t.submission.by ? ' by ' + esc(t.submission.by) : ''}</dd>` : ''}
         <dt>IMDb</dt><dd><a href="${esc(t.imdbUrl)}" target="_blank" rel="noopener">${esc(t.imdbId)}</a></dd>
       </dl>
       <details><summary>Cast (${t.cast.length})</summary><ul>${cast}</ul></details>
@@ -72,9 +89,38 @@ function render(t) {
   </article>`;
 }
 
-fetch('database/titles.json')
+const REPO = 'speedzing/Minecraft-Content-Alumni';
+let knownIds = new Set();
+
+document.getElementById('submit-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const status = document.getElementById('submit-status');
+  const ids = [...new Set(document.getElementById('submit-links').value.match(/tt\d{7,10}/g) || [])];
+  const fresh = ids.filter(id => !knownIds.has(id)).slice(0, 10);
+  const dupes = ids.filter(id => knownIds.has(id));
+  if (!ids.length) { status.textContent = 'No IMDb title links found. They look like https://www.imdb.com/title/tt1234567/'; return; }
+  if (!fresh.length) { status.textContent = 'Already in the database: ' + dupes.join(', '); return; }
+  const body = fresh.map(id => `https://www.imdb.com/title/${id}/`).join('\n');
+  const url = `https://github.com/${REPO}/issues/new?template=submission.yml`
+    + `&title=${encodeURIComponent('[Submission] ' + fresh.join(', '))}&imdb=${encodeURIComponent(body)}`;
+  window.open(url, '_blank', 'noopener');
+  status.textContent = `Opened GitHub for ${fresh.length} title(s). Press "Create" there to submit.`
+    + (dupes.length ? ` Skipped (already added): ${dupes.join(', ')}.` : '');
+});
+
+fetch(`https://api.github.com/repos/${REPO}/issues?labels=submission&state=all&per_page=8`)
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(issues => {
+    document.getElementById('recent').innerHTML = issues.length
+      ? issues.map(i => `<li><a href="${esc(i.html_url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title.replace('[Submission] ', ''))} <span class="muted">· ${i.state === 'closed' ? 'added' : 'processing / needs attention'}</span></li>`).join('')
+      : '<li class="muted">None yet.</li>';
+  })
+  .catch(() => { document.getElementById('recent').innerHTML = '<li class="muted">Could not load submissions.</li>'; });
+
+fetch('database/titles.json', { cache: 'no-cache' })
   .then(r => r.json())
   .then(db => {
+    knownIds = new Set(db.titles.map(t => t.imdbId));
     document.getElementById('meta').textContent = `${db.count} titles · updated ${new Date(db.updatedAt).toLocaleString()}`;
     const list = document.getElementById('list');
     list.innerHTML = db.titles.map(render).join('');

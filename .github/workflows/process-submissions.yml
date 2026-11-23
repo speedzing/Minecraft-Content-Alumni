@@ -1,0 +1,75 @@
+name: Process IMDb submissions
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      imdb:
+        description: IMDb links or IDs (any separator)
+        required: true
+      dry_run:
+        description: Fetch and report only, don't commit
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+concurrency:
+  group: title-database
+  cancel-in-progress: false
+
+jobs:
+  add-titles:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.issue.labels.*.name, 'submission') ||
+      startsWith(github.event.issue.title, '[Submission]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Fetch and add titles
+        id: add
+        env:
+          INPUT_TEXT: ${{ github.event_name == 'issues' && github.event.issue.body || inputs.imdb }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_USER: ${{ github.event.issue.user.login }}
+        run: node scripts/add-titles.mjs
+
+      - name: Commit database changes
+        if: fromJSON(steps.add.outputs.added || '0') > 0 && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add database
+          git commit -m "Add submitted titles${ISSUE_NUMBER:+ (#$ISSUE_NUMBER)}"
+          git push
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" > /dev/null || true
+
+      - name: Reply on submission
+        if: always() && github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          CLOSE: ${{ steps.add.outputs.close }}
+        run: |
+          [ -f result.md ] || echo "Processing failed before any titles were read. See the workflow run log." > result.md
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file result.md
+          if [ "$CLOSE" = "true" ]; then gh issue close "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY"; fi

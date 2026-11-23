@@ -1,10 +1,8 @@
-// Run in the browser console while on any https://www.imdb.com page.
-// Fetches each title page listed in IDS and prints an array of records in the
-// same shape as database/titles.json -> titles[]. Copy the output into the database.
-const IDS = ['tt0000000'];
-
-const extract = (doc) => {
-  const p = JSON.parse(doc.getElementById('__NEXT_DATA__').textContent).props.pageProps;
+// Runs inside an IMDb title page (via Playwright's page.evaluate) and returns one
+// database record built from the page's embedded __NEXT_DATA__ JSON.
+// Must stay self-contained: it is serialized and executed in the browser.
+export function extractImdbTitle() {
+  const p = JSON.parse(document.getElementById('__NEXT_DATA__').textContent).props.pageProps;
   const a = p.aboveTheFoldData || {}, m = p.mainColumnData || {};
   const nm = c => ({ id: c.name.id, name: c.name.nameText.text });
   const img = i => i ? { url: i.url, width: i.width, height: i.height, caption: i.caption?.plainText || null } : null;
@@ -53,13 +51,4 @@ const extract = (doc) => {
     awards: { wins: m.wins?.total ?? 0, nominations: m.nominationsExcludeWins?.total ?? 0 },
     fetchedAt: new Date().toISOString(),
   };
-};
-
-(async () => {
-  const out = [];
-  for (const id of IDS) {
-    const html = await (await fetch(`/title/${id}/`)).text();
-    out.push(extract(new DOMParser().parseFromString(html, 'text/html')));
-  }
-  console.log(JSON.stringify(out, null, 2));
-})();
+}

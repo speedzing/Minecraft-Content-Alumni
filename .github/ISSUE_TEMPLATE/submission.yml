@@ -1,0 +1,17 @@
+name: Title submission
+description: Submit IMDb links to add to the Minecraft Content Alumni database.
+title: "[Submission] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Paste one IMDb title link per line (up to 10). They are processed automatically
+        and added to the database within a few minutes; this issue gets a reply when it's done.
+  - type: textarea
+    id: imdb
+    attributes:
+      label: IMDb links
+      placeholder: https://www.imdb.com/title/tt48403578/
+    validations:
+      required: true

@@ -1,0 +1,11 @@
+{
+  "name": "minecraft-content-alumni",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "add-titles": "node scripts/add-titles.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.49.1"
+  }
+}
