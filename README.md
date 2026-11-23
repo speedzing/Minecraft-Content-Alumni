@@ -15,13 +15,15 @@ This repository hosts the raw data store and a plain viewer page at https://spee
 | `scripts/import-imdb.mjs` | Turns submissions or a list of IDs into database records. |
 | `scripts/reply.mjs` | Replies on, labels and closes submission issues. |
 | `.github/workflows/process-submissions.yml` | Runs the import on new submissions, daily for waiting ones, or manually. |
-| `.github/ISSUE_TEMPLATE/submission.yml` | The submission form (IMDb links, optional poster and synopsis). |
+| `.github/ISSUE_TEMPLATE/submission.yml` | The submission form (IMDb links, optional YouTube/official links, poster and synopsis). |
 
 ## Submitting titles
 
 1. Paste IMDb links into **Submit a title** on the page (or open a new issue with the *Title submission* form).
-2. GitHub opens a prefilled submission. Optionally attach a poster and synopsis, then press **Create** (needs a GitHub account).
+2. GitHub opens a prefilled submission. Optionally add YouTube and official links, a poster and a synopsis, then press **Create** (needs a GitHub account).
 3. The workflow looks each title up in IMDb's datasets, commits it to `main`, replies on the issue and closes it.
+
+To add videos or links to a title that's already listed, submit its IMDb link together with the new links; only links not already stored are added.
 
 Up to 10 links per submission; titles already in the database are skipped. Titles not yet in IMDb's data (new pages take a day or two) get the `waiting` label and are retried every day at 03:30 UTC for up to 7 days, then labelled `needs-attention`.
 
@@ -39,7 +41,7 @@ IMDb's datasets are provided for personal and non-commercial use: https://develo
 
 ## Record fields
 
-Each entry in `titles[]` has: `imdbId`, `imdbUrl`, `title`, `originalTitle`, `titleType`, `isSeries`, `year`, `endYear`, `releaseDate`, `releaseCountry`, `runtimeMinutes`, `certificate`, `genres`, `interests`, `plot`, `rating {value, votes}`, `metascore`, `poster {url, width, height, caption, local}`, `directors`, `writers`, `stars`, `creators`, `cast [{id, name, role, characters, creditedAs, photo}]`, `crew [{id, name, job}]` (dataset imports), `studios`, `countries`, `languages`, `keywords`, `akas`, `filmingLocations`, `episodes`, `series`, `videos`, `gallery`, `trivia`, `externalLinks`, `awards`, `fetchedAt`, `source` (`imdb` or `imdb-datasets`), and `submission {issue, by, at}` for titles added through the form. Fields a source doesn't provide are `null` or empty.
+Each entry in `titles[]` has: `imdbId`, `imdbUrl`, `title`, `originalTitle`, `titleType`, `isSeries`, `year`, `endYear`, `releaseDate`, `releaseCountry`, `runtimeMinutes`, `certificate`, `genres`, `interests`, `plot`, `rating {value, votes}`, `metascore`, `poster {url, width, height, caption, local}`, `directors`, `writers`, `stars`, `creators`, `cast [{id, name, role, characters, creditedAs, photo}]`, `crew [{id, name, job}]` (dataset imports), `studios`, `countries`, `languages`, `keywords`, `akas`, `filmingLocations`, `episodes`, `series`, `videos`, `gallery`, `trivia`, `externalLinks`, `awards`, `links [{type, label, url, platform, youtubeId, channel, official, source}]` (type is `film`, `video`, `trailer`, `teaser`, `extra`, `soundtrack`, `playlist`, `channel` or `website`; `source` is `research` for links verified by hand from the creators' own channels, `submission` for submitted ones), `fetchedAt`, `source` (`imdb` or `imdb-datasets`), and `submission {issue, by, at}` for titles added through the form. Fields a source doesn't provide are `null` or empty.
 
 ## Viewing locally
 

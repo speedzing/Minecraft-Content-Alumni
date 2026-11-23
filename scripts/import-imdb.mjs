@@ -26,14 +26,67 @@ const event = process.env.GITHUB_EVENT_NAME || 'manual';
 
 // Splits an issue-form body ("### IMDb links\n\n...") into its fields.
 function readForm(body) {
-  if (!/^### /m.test(body)) return { links: body, poster: '', synopsis: '' };
+  if (!/^### /m.test(body)) return { links: body, poster: '', synopsis: '', extraLinks: '' };
   const fields = {};
   for (const part of body.split(/^### /m).slice(1)) {
     const nl = part.indexOf('\n');
     const text = part.slice(nl + 1).trim();
     fields[part.slice(0, nl).trim().toLowerCase()] = text === '_No response_' ? '' : text;
   }
-  return { links: fields['imdb links'] || '', poster: fields.poster || '', synopsis: fields.synopsis || '' };
+  return {
+    links: fields['imdb links'] || '', poster: fields.poster || '', synopsis: fields.synopsis || '',
+    extraLinks: fields['youtube and official links'] || '',
+  };
+}
+
+const MAX_LINKS = 20;
+const URL_PATTERN = /https?:\/\/[^\s)"'<>\]]+/g;
+
+const linkType = title => /trailer/i.test(title) ? 'trailer'
+  : /teaser/i.test(title) ? 'teaser'
+  : /soundtrack|\bost\b/i.test(title) ? 'soundtrack'
+  : /behind|making of|commentary|interview|bts|blooper/i.test(title) ? 'extra'
+  : 'video';
+
+function youtubeVideoId(u) {
+  if (u.hostname === 'youtu.be') return u.pathname.slice(1) || null;
+  return u.searchParams.get('v') || u.pathname.match(/^\/(?:shorts|live|embed)\/([\w-]{6,})/)?.[1] || null;
+}
+
+// Turns one submitted URL into a link record; YouTube links get their title and channel from oEmbed.
+async function describeLink(raw) {
+  let u;
+  try { u = new URL(raw); } catch { return null; }
+  const host = u.hostname.replace(/^(www|m)\./, '');
+  const isYouTube = host === 'youtube.com' || host === 'youtu.be' || host === 'music.youtube.com';
+  const link = { type: 'website', label: host, url: u.href, platform: isYouTube ? 'youtube' : host,
+    youtubeId: null, channel: null, official: null, source: 'submission' };
+  if (!isYouTube) return link;
+
+  const videoId = youtubeVideoId(u);
+  const list = u.searchParams.get('list');
+  if (videoId) Object.assign(link, { type: 'video', youtubeId: videoId, url: `https://www.youtube.com/watch?v=${videoId}` });
+  else if (list) Object.assign(link, { type: 'playlist', url: `https://www.youtube.com/playlist?list=${list}` });
+  else if (/^\/(@|channel\/|c\/|user\/)/.test(u.pathname)) {
+    link.type = 'channel';
+    link.label = link.channel = decodeURIComponent(u.pathname.split('/').filter(Boolean).pop()).replace(/^@/, '');
+    return link;
+  }
+  try {
+    const res = await fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(link.url)}`);
+    if (res.ok) {
+      const info = await res.json();
+      link.label = info.title;
+      link.channel = info.author_name;
+    }
+  } catch { /* keep the host as the label */ }
+  if (link.type === 'video') link.type = linkType(link.label);
+  return link;
+}
+
+async function readLinks(text) {
+  const urls = [...new Set(text.match(URL_PATTERN) || [])].slice(0, MAX_LINKS);
+  return (await Promise.all(urls.map(describeLink))).filter(Boolean);
 }
 
 async function collectJobs() {
@@ -70,6 +123,7 @@ const jobs = (await collectJobs()).map(job => {
     ids: [...new Set(form.links.match(/tt\d{7,10}/g) || [])].slice(0, MAX_PER_SUBMISSION),
     poster: (form.poster.match(/https:\/\/[^\s)"'<>]+/g) || []).find(u => ATTACHMENT_PREFIXES.some(p => u.startsWith(p))) || null,
     synopsis: form.synopsis.slice(0, 2000),
+    extraLinks: form.extraLinks,
   };
 });
 
@@ -79,13 +133,26 @@ const toLookUp = [...new Set(jobs.flatMap(j => j.ids).filter(id => dryRun || !kn
 const found = toLookUp.length ? await lookupTitles(toLookUp) : new Map();
 
 const results = [];
-let totalAdded = 0;
+let totalChanged = 0;
 for (const job of jobs) {
   const lines = [];
   let added = 0, waiting = 0;
+  // Extra links belong to one title, so they're only read for single-title submissions.
+  const links = job.ids.length === 1 && job.extraLinks ? await readLinks(job.extraLinks) : [];
   if (!job.ids.length) lines.push('No IMDb title links found. Links look like `https://www.imdb.com/title/tt1234567/`.');
   for (const id of job.ids) {
-    if (!dryRun && known.has(id)) { lines.push(`- \`${id}\` is already in the database.`); continue; }
+    if (!dryRun && known.has(id)) {
+      const existing = db.titles.find(t => t.imdbId === id);
+      const fresh = links.filter(l => !(existing.links || []).some(x => x.url === l.url));
+      if (fresh.length) {
+        existing.links = [...(existing.links || []), ...fresh];
+        totalChanged++;
+        lines.push(`- \`${id}\` is already in the database; added ${fresh.length} link(s) to **${existing.title}**.`);
+      } else {
+        lines.push(`- \`${id}\` is already in the database.`);
+      }
+      continue;
+    }
     const record = found.get(id);
     if (!record) {
       waiting++;
@@ -95,6 +162,7 @@ for (const job of jobs) {
     const title = structuredClone(record);
     if (job.issue) title.submission = { issue: job.issue, by: job.user, at: new Date().toISOString() };
     if (job.ids.length === 1 && job.synopsis) title.plot = job.synopsis;
+    title.links = links;
     if (job.ids.length === 1 && job.poster && !dryRun) {
       try { title.poster = await savePoster(job.poster, id); }
       catch (err) { lines.push(`  - The poster could not be saved: ${err.message}.`); }
@@ -102,10 +170,12 @@ for (const job of jobs) {
     if (dryRun) console.log(JSON.stringify(title, null, 2));
     else { db.titles.push(title); known.add(id); }
     added++;
-    lines.push(`- ${dryRun ? 'Found' : 'Added'} **${title.title}** (${title.year ?? 'year unknown'}, ${title.titleType}): \`${id}\`, ${title.cast.length} cast${title.poster ? ', poster saved' : ''}`);
+    lines.push(`- ${dryRun ? 'Found' : 'Added'} **${title.title}** (${title.year ?? 'year unknown'}, ${title.titleType}): \`${id}\`, ${title.cast.length} cast${title.poster ? ', poster saved' : ''}${links.length ? `, ${links.length} link(s)` : ''}`);
   }
-  if (job.ids.length > 1 && (job.poster || job.synopsis)) lines.push('The poster and synopsis fields are only used when a submission has a single title.');
-  totalAdded += added;
+  if (job.ids.length > 1 && (job.poster || job.synopsis || job.extraLinks)) {
+    lines.push('The poster, synopsis and links fields are only used when a submission has a single title.');
+  }
+  totalChanged += added;
 
   const expired = waiting > 0 && job.createdAt && Date.now() - Date.parse(job.createdAt) > GIVE_UP_DAYS * 864e5;
   const result = { issue: job.issue, comment: null, close: false, addLabels: [], removeLabels: [] };
@@ -127,7 +197,7 @@ for (const job of jobs) {
   console.log(`${job.issue ? `#${job.issue}` : 'Import'}:\n${lines.join('\n')}\n`);
 }
 
-if (!dryRun && totalAdded) {
+if (!dryRun && totalChanged) {
   db.count = db.titles.length;
   db.updatedAt = new Date().toISOString();
   await fs.writeFile(DB_PATH, JSON.stringify(db, null, 2) + '\n');

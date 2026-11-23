@@ -31,6 +31,11 @@
   #submit button { font: inherit; padding: 6px 14px; margin-top: 6px; cursor: pointer; }
   #submit-status { font-size: .9rem; margin: 6px 0 0; }
   #recent { font-size: .85rem; margin: 8px 0 0; padding-left: 18px; }
+  #submit label { display: block; font-size: .85rem; margin: 8px 0 2px; }
+  .links { list-style: none; padding: 0; margin: 8px 0; font-size: .9rem; }
+  .links li { margin: 2px 0; }
+  .links .kind { display: inline-block; min-width: 82px; color: #888; }
+  .player iframe { width: 100%; max-width: 640px; aspect-ratio: 16 / 9; border: 0; display: block; margin-top: 6px; }
   @media (max-width: 560px) { .title { grid-template-columns: 1fr; } .title img { width: 140px; } }
 </style>
 </head>
@@ -48,7 +53,10 @@
   <h2>Submit a title</h2>
   <p class="meta">Paste IMDb links (one per line, up to 10). You'll confirm on GitHub (free account needed), where you can also attach a poster and synopsis. Titles are added within a few minutes; brand-new IMDb pages can take a day or two to show up in IMDb's data and are retried daily.</p>
   <form id="submit-form">
-    <textarea id="submit-links" placeholder="https://www.imdb.com/title/tt48403578/" aria-label="IMDb links"></textarea>
+    <label for="submit-links">IMDb links</label>
+    <textarea id="submit-links" placeholder="https://www.imdb.com/title/tt48403578/"></textarea>
+    <label for="submit-extra">YouTube and official links (optional, one title at a time; also works for titles already listed)</label>
+    <textarea id="submit-extra" placeholder="Full film, episodes, trailers, behind-the-scenes, soundtrack, creator channel, official website…"></textarea>
     <button type="submit">Submit</button>
   </form>
   <p id="submit-status" role="status"></p>
@@ -62,6 +70,26 @@
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const names = arr => (arr || []).map(p => esc(p.name)).join(', ') || '—';
 
+const LINK_TYPES = { film: 'Full film', video: 'Video', trailer: 'Trailer', teaser: 'Teaser', extra: 'Extra',
+  soundtrack: 'Soundtrack', playlist: 'Playlist', channel: 'Channel', website: 'Website' };
+const LINK_ORDER = Object.keys(LINK_TYPES);
+
+function renderLinks(links) {
+  if (!links?.length) return '';
+  const sorted = [...links].sort((a, b) => LINK_ORDER.indexOf(a.type) - LINK_ORDER.indexOf(b.type));
+  const main = ['film', 'video', 'trailer', 'teaser'].map(k => sorted.find(l => l.type === k && l.youtubeId)).find(Boolean);
+  const items = sorted.map(l => `<li><span class="kind">${esc(LINK_TYPES[l.type] || l.type)}</span><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>${l.channel && l.type !== 'channel' ? ` <span class="muted">· ${esc(l.channel)}</span>` : ''}</li>`).join('');
+  return `${main ? `<details class="player" data-yt="${esc(main.youtubeId)}"><summary>Play: ${esc(main.label)}</summary></details>` : ''}
+    <ul class="links">${items}</ul>`;
+}
+
+// Embeds load only when opened, so the page doesn't pull in every player up front.
+document.addEventListener('toggle', e => {
+  const d = e.target;
+  if (!d.classList?.contains('player') || !d.open || d.querySelector('iframe')) return;
+  d.insertAdjacentHTML('beforeend', `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(d.dataset.yt)}?autoplay=1" title="Video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`);
+}, true);
+
 function render(t) {
   const yrs = t.year + (t.isSeries ? '–' + (t.endYear || '') : '');
   const rating = t.rating.value ? `${t.rating.value}/10 (${t.rating.votes.toLocaleString()} votes)` : 'Not yet rated';
@@ -73,6 +101,7 @@ function render(t) {
       <h2>${esc(t.title)} <span class="muted">(${esc(yrs)})</span></h2>
       <p class="muted">${esc(t.titleType)}${t.runtimeMinutes ? ' · ' + t.runtimeMinutes + ' min' : ''}${t.certificate ? ' · ' + esc(t.certificate) : ''} · ${esc(t.genres.join(', '))}</p>
       <p>${esc(t.plot) || '<span class="muted">No synopsis yet.</span>'}</p>
+      ${renderLinks(t.links)}
       <dl>
         <dt>IMDb rating</dt><dd>${esc(rating)}</dd>
         <dt>Released</dt><dd>${esc(t.releaseDate || '—')}${t.releaseCountry ? ' (' + esc(t.releaseCountry) + ')' : ''}</dd>
@@ -104,13 +133,17 @@ document.getElementById('submit-form').addEventListener('submit', e => {
   e.preventDefault();
   const status = document.getElementById('submit-status');
   const ids = [...new Set(document.getElementById('submit-links').value.match(/tt\d{7,10}/g) || [])];
-  const fresh = ids.filter(id => !knownIds.has(id)).slice(0, 10);
-  const dupes = ids.filter(id => knownIds.has(id));
+  const extra = [...new Set(document.getElementById('submit-extra').value.match(/https?:\/\/\S+/g) || [])];
   if (!ids.length) { status.textContent = 'No IMDb title links found. They look like https://www.imdb.com/title/tt1234567/'; return; }
-  if (!fresh.length) { status.textContent = 'Already in the database: ' + dupes.join(', '); return; }
+  if (extra.length && ids.length > 1) { status.textContent = 'YouTube and official links can only be sent with one IMDb title at a time.'; return; }
+  // A single listed title is allowed through when it brings new links.
+  const fresh = extra.length ? ids : ids.filter(id => !knownIds.has(id)).slice(0, 10);
+  const dupes = ids.filter(id => !fresh.includes(id));
+  if (!fresh.length) { status.textContent = 'Already in the database: ' + dupes.join(', ') + '. To add videos or links to it, fill in the second box.'; return; }
   const body = fresh.map(id => `https://www.imdb.com/title/${id}/`).join('\n');
   const url = `https://github.com/${REPO}/issues/new?template=submission.yml`
-    + `&title=${encodeURIComponent('[Submission] ' + fresh.join(', '))}&imdb=${encodeURIComponent(body)}`;
+    + `&title=${encodeURIComponent('[Submission] ' + fresh.join(', ') + (extra.length && knownIds.has(fresh[0]) ? ' (links)' : ''))}`
+    + `&imdb=${encodeURIComponent(body)}` + (extra.length ? `&links=${encodeURIComponent(extra.join('\n'))}` : '');
   window.open(url, '_blank', 'noopener');
   status.textContent = `Opened GitHub for ${fresh.length} title(s). Press "Create" there to submit.`
     + (dupes.length ? ` Skipped (already added): ${dupes.join(', ')}.` : '');

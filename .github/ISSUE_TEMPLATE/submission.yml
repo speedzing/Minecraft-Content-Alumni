@@ -17,6 +17,15 @@ body:
     validations:
       required: true
   - type: textarea
+    id: links
+    attributes:
+      label: YouTube and official links
+      description: >-
+        Optional, single-title submissions only. One per line: the full film or episodes, trailers,
+        teasers, behind-the-scenes, soundtrack playlists, the creator's channel, official websites.
+        Works for titles already in the database too.
+      placeholder: https://www.youtube.com/watch?v=...
+  - type: textarea
     id: poster
     attributes:
       label: Poster

@@ -1,7 +1,7 @@
 {
   "name": "Minecraft Content Alumni — Title Database",
   "version": 1,
-  "updatedAt": "2026-11-23T12:58:39.419Z",
+  "updatedAt": "2026-11-23T13:19:44.165Z",
   "count": 5,
   "titles": [
     {
@@ -228,7 +228,99 @@
         "nominations": 0
       },
       "fetchedAt": "2026-11-23T12:38:58.917Z",
-      "source": "imdb"
+      "source": "imdb",
+      "links": [
+        {
+          "type": "film",
+          "label": "Svefnthorn: The Omen (Part One)",
+          "url": "https://www.youtube.com/watch?v=-3VOa2w0KzY",
+          "platform": "youtube",
+          "youtubeId": "-3VOa2w0KzY",
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "trailer",
+          "label": "Official Trailer",
+          "url": "https://www.youtube.com/watch?v=WQJjAOYZm_w",
+          "platform": "youtube",
+          "youtubeId": "WQJjAOYZm_w",
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "teaser",
+          "label": "Official Teaser",
+          "url": "https://www.youtube.com/watch?v=TiwgvDD90Ks",
+          "platform": "youtube",
+          "youtubeId": "TiwgvDD90Ks",
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "extra",
+          "label": "Behind The Voices with Ari Hong",
+          "url": "https://www.youtube.com/watch?v=sVIPH8vljPw",
+          "platform": "youtube",
+          "youtubeId": "sVIPH8vljPw",
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "extra",
+          "label": "Behind The Voices with Aeria Nephri",
+          "url": "https://www.youtube.com/watch?v=ZQzHGCINckQ",
+          "platform": "youtube",
+          "youtubeId": "ZQzHGCINckQ",
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "extra",
+          "label": "The Making Of the Trailer",
+          "url": "https://www.youtube.com/watch?v=L23KaU6RA28",
+          "platform": "youtube",
+          "youtubeId": "L23KaU6RA28",
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "extra",
+          "label": "Everything Wrong With Svefnthorn: The Omen",
+          "url": "https://www.youtube.com/watch?v=o6Ytl1nBUJ8",
+          "platform": "youtube",
+          "youtubeId": "o6Ytl1nBUJ8",
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "soundtrack",
+          "label": "Original Motion Picture Soundtrack",
+          "url": "https://www.youtube.com/playlist?list=PLkQOZwzrIaj-QacK_BNuDKbSUa61gnESO",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "IAmMaddieFilmsOST",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "channel",
+          "label": "IAmMaddieFilms",
+          "url": "https://www.youtube.com/@IAmMaddieFilms",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "IAmMaddieFilms",
+          "official": true,
+          "source": "research"
+        }
+      ]
     },
     {
       "imdbId": "tt48184501",
@@ -453,7 +545,49 @@
         "nominations": 0
       },
       "fetchedAt": "2026-11-23T12:39:00.629Z",
-      "source": "imdb"
+      "source": "imdb",
+      "links": [
+        {
+          "type": "film",
+          "label": "Pilot Episode",
+          "url": "https://www.youtube.com/watch?v=l1bHde37pB8",
+          "platform": "youtube",
+          "youtubeId": "l1bHde37pB8",
+          "channel": "Codey",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "trailer",
+          "label": "Pilot Trailer",
+          "url": "https://www.youtube.com/watch?v=RlRnY8oxzws",
+          "platform": "youtube",
+          "youtubeId": "RlRnY8oxzws",
+          "channel": "Codey",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "extra",
+          "label": "Director's Commentary (stream)",
+          "url": "https://www.youtube.com/watch?v=jSioobRsVHc",
+          "platform": "youtube",
+          "youtubeId": "jSioobRsVHc",
+          "channel": "Codey",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "channel",
+          "label": "Codey",
+          "url": "https://www.youtube.com/@Codey6001",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "Codey",
+          "official": true,
+          "source": "research"
+        }
+      ]
     },
     {
       "imdbId": "tt39289432",
@@ -812,7 +946,49 @@
         "nominations": 0
       },
       "fetchedAt": "2026-11-23T12:39:02.102Z",
-      "source": "imdb"
+      "source": "imdb",
+      "links": [
+        {
+          "type": "channel",
+          "label": "Wemmbu",
+          "url": "https://www.youtube.com/@wemmbumc",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "Wemmbu",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "channel",
+          "label": "FlameFrags",
+          "url": "https://www.youtube.com/@FlameFragsMC",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "FlameFrags",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "channel",
+          "label": "Parrot",
+          "url": "https://www.youtube.com/@ParrotX2",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "Parrot",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "channel",
+          "label": "Spoke",
+          "url": "https://www.youtube.com/@Spokeishere",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "Spoke",
+          "official": true,
+          "source": "research"
+        }
+      ]
     },
     {
       "imdbId": "tt43685171",
@@ -1038,7 +1214,39 @@
         "nominations": 0
       },
       "fetchedAt": "2026-11-23T12:39:03.631Z",
-      "source": "imdb"
+      "source": "imdb",
+      "links": [
+        {
+          "type": "film",
+          "label": "HAMILTON: A Minecraft Musical",
+          "url": "https://www.youtube.com/watch?v=ItvwIwML3VI",
+          "platform": "youtube",
+          "youtubeId": "ItvwIwML3VI",
+          "channel": "schpood",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "extra",
+          "label": "Interviewing the Cast (stream)",
+          "url": "https://www.youtube.com/watch?v=wy0nQHKBPH4",
+          "platform": "youtube",
+          "youtubeId": "wy0nQHKBPH4",
+          "channel": "schpood",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "channel",
+          "label": "schpood",
+          "url": "https://www.youtube.com/@schpoody",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "schpood",
+          "official": true,
+          "source": "research"
+        }
+      ]
     },
     {
       "imdbId": "tt48403578",
@@ -1206,7 +1414,49 @@
         "nominations": 0
       },
       "fetchedAt": "2026-11-23T12:39:07.123Z",
-      "source": "imdb"
+      "source": "imdb",
+      "links": [
+        {
+          "type": "film",
+          "label": "Reckoning: A Minecraft Film (4K)",
+          "url": "https://www.youtube.com/watch?v=-E0I-X1LRtg",
+          "platform": "youtube",
+          "youtubeId": "-E0I-X1LRtg",
+          "channel": "bhavi",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "film",
+          "label": "Expanded Ratio Edition",
+          "url": "https://www.youtube.com/watch?v=fQryl4ArXZs",
+          "platform": "youtube",
+          "youtubeId": "fQryl4ArXZs",
+          "channel": "bhavi",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "trailer",
+          "label": "Official Trailer",
+          "url": "https://www.youtube.com/watch?v=YNI5VSgzRuU",
+          "platform": "youtube",
+          "youtubeId": "YNI5VSgzRuU",
+          "channel": "bhavi",
+          "official": true,
+          "source": "research"
+        },
+        {
+          "type": "channel",
+          "label": "bhavi",
+          "url": "https://www.youtube.com/@27bhavi",
+          "platform": "youtube",
+          "youtubeId": null,
+          "channel": "bhavi",
+          "official": true,
+          "source": "research"
+        }
+      ]
     }
   ]
 }
