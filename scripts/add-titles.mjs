@@ -56,8 +56,12 @@ if (todo.length) {
   const page = await browser.newPage({ locale: 'en-US' });
   for (const id of todo) {
     try {
-      await page.goto(`https://www.imdb.com/title/${id}/`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
-      await page.waitForSelector('#__NEXT_DATA__', { state: 'attached', timeout: 30_000 });
+      const res = await page.goto(`https://www.imdb.com/title/${id}/`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+      try {
+        await page.waitForSelector('#__NEXT_DATA__', { state: 'attached', timeout: 30_000 });
+      } catch {
+        throw new Error(`IMDb did not serve the title page (HTTP ${res?.status()}, page title "${await page.title()}")`);
+      }
       const title = await page.evaluate(extractImdbTitle);
       if (!title?.imdbId || !title.title) throw new Error('IMDb page had no title data');
       if (!dryRun && known.has(title.imdbId)) {
