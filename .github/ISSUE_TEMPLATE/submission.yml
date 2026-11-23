@@ -1,13 +1,14 @@
 name: Title submission
-description: Submit IMDb links to add to the Minecraft Content Alumni database.
+description: Submit IMDb links to add to the Minecraft Content Alumni pre-launch database.
 title: "[Submission] "
 labels: ["submission"]
 body:
   - type: markdown
     attributes:
       value: |
-        Paste one IMDb title link per line (up to 10). They are processed automatically
-        and added to the database within a few minutes; this issue gets a reply when it's done.
+        Paste one IMDb title link per line (up to 10). Titles are added automatically from IMDb's
+        daily data within a few minutes, and this issue gets a reply when it's done. Brand-new IMDb
+        pages can take a day or two to appear in that data; they're retried every day.
   - type: textarea
     id: imdb
     attributes:
@@ -15,3 +16,13 @@ body:
       placeholder: https://www.imdb.com/title/tt48403578/
     validations:
       required: true
+  - type: textarea
+    id: poster
+    attributes:
+      label: Poster
+      description: Optional, single-title submissions only. Drag a JPEG, PNG or WebP poster in here (IMDb's data doesn't include posters).
+  - type: textarea
+    id: synopsis
+    attributes:
+      label: Synopsis
+      description: Optional, single-title submissions only. A short description of the production.

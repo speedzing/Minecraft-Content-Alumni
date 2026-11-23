@@ -1,17 +1,20 @@
-name: Process IMDb submissions
+name: Import from IMDb
 
 on:
   issues:
     types: [opened]
+  schedule:
+    # IMDb refreshes its datasets around 00:45 UTC; retry waiting submissions after that.
+    - cron: "30 3 * * *"
   workflow_dispatch:
     inputs:
       imdb:
-        description: IMDb links or IDs (any separator)
+        description: IMDb links or IDs to import (any separator)
         required: true
       dry_run:
-        description: Fetch and report only, don't commit
+        description: Look up only, don't save
         type: boolean
-        default: true
+        default: false
 
 permissions:
   contents: write
@@ -23,9 +26,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  add-titles:
+  import:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      github.event_name != 'issues' ||
       contains(github.event.issue.labels.*.name, 'submission') ||
       startsWith(github.event.issue.title, '[Submission]')
     runs-on: ubuntu-latest
@@ -36,40 +39,27 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Playwright
-        run: |
-          npm install --no-audit --no-fund
-          npx playwright install --with-deps chromium
-
-      - name: Fetch and add titles
-        id: add
-        env:
-          INPUT_TEXT: ${{ github.event_name == 'issues' && github.event.issue.body || inputs.imdb }}
-          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_USER: ${{ github.event.issue.user.login }}
-        run: node scripts/add-titles.mjs
-
-      - name: Commit database changes
-        if: fromJSON(steps.add.outputs.added || '0') > 0 && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+      - name: Import titles
         env:
           GH_TOKEN: ${{ github.token }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          IMDB_INPUT: ${{ inputs.imdb }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: node scripts/import-imdb.mjs
+
+      - name: Commit database changes
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          git add database
+          if git diff --cached --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add database
-          git commit -m "Add submitted titles${ISSUE_NUMBER:+ (#$ISSUE_NUMBER)}"
+          git commit -m "Import titles from IMDb (${{ github.event_name }})"
           git push
           gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" > /dev/null || true
 
-      - name: Reply on submission
-        if: always() && github.event_name == 'issues'
+      - name: Reply on submissions
+        if: github.event_name != 'workflow_dispatch'
         env:
           GH_TOKEN: ${{ github.token }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          CLOSE: ${{ steps.add.outputs.close }}
-        run: |
-          [ -f result.md ] || echo "Processing failed before any titles were read. See the workflow run log." > result.md
-          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file result.md
-          if [ "$CLOSE" = "true" ]; then gh issue close "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY"; fi
+        run: node scripts/reply.mjs

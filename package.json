@@ -3,9 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "add-titles": "node scripts/add-titles.mjs"
-  },
-  "dependencies": {
-    "playwright": "1.49.1"
+    "import": "node scripts/import-imdb.mjs"
   }
 }

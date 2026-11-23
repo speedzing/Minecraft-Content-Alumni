@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Minecraft Content Alumni — Title Database</title>
+<title>Minecraft Content Alumni — Pre-launch Database</title>
 <style>
   :root { color-scheme: light dark; }
   body { font-family: system-ui, sans-serif; margin: 0 auto; padding: 16px; max-width: 1100px; line-height: 1.45; }
@@ -23,6 +23,8 @@
   .gallery { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
   .gallery img { height: 80px; width: auto; }
   pre { overflow-x: auto; font-size: .75rem; background: #8881; padding: 8px; }
+  #about { margin-bottom: 16px; }
+  #about p { margin: 0 0 8px; }
   #submit { border: 1px solid #8884; padding: 12px; margin-bottom: 16px; }
   #submit h2 { font-size: 1rem; margin: 0 0 4px; }
   #submit textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; min-height: 64px; }
@@ -34,12 +36,17 @@
 </head>
 <body>
 <header>
-  <h1>Minecraft Content Alumni — Title Database</h1>
+  <h1>Minecraft Content Alumni — Pre-launch Database</h1>
   <p class="meta" id="meta">Loading…</p>
 </header>
+<section id="about">
+  <p><strong>Minecraft Content Alumni</strong> is an upcoming film database for Minecraft productions: films, series, animations and documentaries made in Minecraft, with pages for each production, its creators and studios, plus ratings, reviews and watchlists.</p>
+  <p><strong>This is a pre-launch page, not the real site.</strong> It's a plain working list of the productions being collected before launch. The look here is deliberately basic and does not reflect the design of the finished website.</p>
+  <p>Know a Minecraft production that's on IMDb? Submit it below. It's added automatically from IMDb's official data and will be part of the database when the site launches.</p>
+</section>
 <section id="submit">
   <h2>Submit a title</h2>
-  <p class="meta">Paste IMDb links (one per line, up to 10). You'll confirm on GitHub, then the title is fetched and added automatically within a few minutes.</p>
+  <p class="meta">Paste IMDb links (one per line, up to 10). You'll confirm on GitHub (free account needed), where you can also attach a poster and synopsis. Titles are added within a few minutes; brand-new IMDb pages can take a day or two to show up in IMDb's data and are retried daily.</p>
   <form id="submit-form">
     <textarea id="submit-links" placeholder="https://www.imdb.com/title/tt48403578/" aria-label="IMDb links"></textarea>
     <button type="submit">Submit</button>
@@ -65,7 +72,7 @@ function render(t) {
     <div>
       <h2>${esc(t.title)} <span class="muted">(${esc(yrs)})</span></h2>
       <p class="muted">${esc(t.titleType)}${t.runtimeMinutes ? ' · ' + t.runtimeMinutes + ' min' : ''}${t.certificate ? ' · ' + esc(t.certificate) : ''} · ${esc(t.genres.join(', '))}</p>
-      <p>${esc(t.plot) || '<span class="muted">No synopsis on IMDb.</span>'}</p>
+      <p>${esc(t.plot) || '<span class="muted">No synopsis yet.</span>'}</p>
       <dl>
         <dt>IMDb rating</dt><dd>${esc(rating)}</dd>
         <dt>Released</dt><dd>${esc(t.releaseDate || '—')}${t.releaseCountry ? ' (' + esc(t.releaseCountry) + ')' : ''}</dd>
@@ -82,6 +89,7 @@ function render(t) {
         <dt>IMDb</dt><dd><a href="${esc(t.imdbUrl)}" target="_blank" rel="noopener">${esc(t.imdbId)}</a></dd>
       </dl>
       <details><summary>Cast (${t.cast.length})</summary><ul>${cast}</ul></details>
+      ${t.crew?.length ? `<details><summary>Crew (${t.crew.length})</summary><ul>${t.crew.map(c => `<li>${esc(c.name)} <span class="muted">· ${esc(c.job)}</span></li>`).join('')}</ul></details>` : ''}
       ${t.gallery.length ? `<details><summary>Gallery (${t.gallery.length})</summary><div class="gallery">${gallery}</div></details>` : ''}
       ${t.trivia.length ? `<details><summary>Trivia</summary><ul>${t.trivia.map(x => '<li>' + esc(x) + '</li>').join('')}</ul></details>` : ''}
       <details><summary>Raw JSON</summary><pre>${esc(JSON.stringify(t, null, 2))}</pre></details>
@@ -108,11 +116,19 @@ document.getElementById('submit-form').addEventListener('submit', e => {
     + (dupes.length ? ` Skipped (already added): ${dupes.join(', ')}.` : '');
 });
 
+function submissionState(issue) {
+  const labels = issue.labels.map(l => l.name);
+  if (issue.state === 'closed') return 'done';
+  if (labels.includes('needs-attention')) return 'needs attention';
+  if (labels.includes('waiting')) return 'waiting for IMDb data (retried daily)';
+  return 'processing';
+}
+
 fetch(`https://api.github.com/repos/${REPO}/issues?labels=submission&state=all&per_page=8`)
   .then(r => r.ok ? r.json() : Promise.reject(r.status))
   .then(issues => {
     document.getElementById('recent').innerHTML = issues.length
-      ? issues.map(i => `<li><a href="${esc(i.html_url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title.replace('[Submission] ', ''))} <span class="muted">· ${i.state === 'closed' ? 'added' : 'processing / needs attention'}</span></li>`).join('')
+      ? issues.map(i => `<li><a href="${esc(i.html_url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title.replace('[Submission] ', ''))} <span class="muted">· ${submissionState(i)}</span></li>`).join('')
       : '<li class="muted">None yet.</li>';
   })
   .catch(() => { document.getElementById('recent').innerHTML = '<li class="muted">Could not load submissions.</li>'; });
