@@ -35,7 +35,7 @@ Locally (needs bash, curl, gunzip and grep, e.g. Git Bash): `node scripts/import
 
 ## What IMDb's datasets include
 
-Title, original title, type, year range, runtime, genres, rating and votes, directors, writers, principal cast with characters, principal crew, and episode counts for series. They do **not** include posters, plots, images, studios, countries or languages; posters and synopses come from the submission form instead. The six launch titles were captured from their IMDb pages and have the fuller set of fields.
+Title, original title, type, year range, runtime, genres, rating and votes, directors, writers, principal cast with characters, principal crew, and episode counts for series. They do **not** include posters, plots, images, studios, countries or languages; posters and synopses come from the submission form instead. The launch titles were captured from their IMDb pages and have the fuller set of fields.
 
 IMDb's datasets are provided for personal and non-commercial use: https://developer.imdb.com/non-commercial-datasets/
 
