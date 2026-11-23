@@ -1,0 +1,1480 @@
+{
+  "name": "Minecraft Content Alumni — Title Database",
+  "version": 1,
+  "updatedAt": "2026-11-23T12:40:57.530Z",
+  "count": 6,
+  "titles": [
+    {
+      "imdbId": "tt37975367",
+      "imdbUrl": "https://www.imdb.com/title/tt37975367/",
+      "title": "Svefnthorn: The Omen",
+      "originalTitle": "Svefnthorn: The Omen",
+      "titleType": "Short",
+      "isSeries": false,
+      "year": 2025,
+      "endYear": null,
+      "releaseDate": "2025-10-25",
+      "releaseCountry": "United States",
+      "runtimeMinutes": 23,
+      "certificate": null,
+      "genres": [
+        "Animation",
+        "Short",
+        "Fantasy"
+      ],
+      "interests": [
+        "Animation",
+        "Fantasy",
+        "Short"
+      ],
+      "plot": "Svefnthorn: The Omen is the first part in a four part film series created by Madison Cyre and Mae Spencer. It follows a young girl named Gili living in a secluded village as her whole life turns upside down.",
+      "rating": {
+        "value": null,
+        "votes": 0
+      },
+      "metascore": null,
+      "poster": {
+        "url": "https://m.media-amazon.com/images/M/MV5BZDIwNjhlYWUtZjQ2NC00YWMxLTk4ZGEtYjg0ODBkYmQ2N2VhXkEyXkFqcGc@._V1_.jpg",
+        "width": 4500,
+        "height": 8280,
+        "caption": "Svefnthorn: The Omen (2025)",
+        "local": "database/posters/tt37975367.jpg"
+      },
+      "directors": [
+        {
+          "id": "nm17359487",
+          "name": "Madison Cyre"
+        },
+        {
+          "id": "nm5132437",
+          "name": "Mae Spencer"
+        }
+      ],
+      "writers": [
+        {
+          "id": "nm17359487",
+          "name": "Madison Cyre"
+        },
+        {
+          "id": "nm5132437",
+          "name": "Mae Spencer"
+        }
+      ],
+      "stars": [
+        {
+          "id": "nm17610172",
+          "name": "Sulayman Ancheyta-Guzman"
+        },
+        {
+          "id": "nm17609251",
+          "name": "Bardic"
+        },
+        {
+          "id": "nm17632078",
+          "name": "Beetle Bochsler"
+        }
+      ],
+      "creators": [],
+      "cast": [
+        {
+          "id": "nm17610172",
+          "name": "Sulayman Ancheyta-Guzman",
+          "role": "Actor",
+          "characters": [
+            "Elder Aldebrand"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17609251",
+          "name": "Bardic",
+          "role": "Actor",
+          "characters": [
+            "Merchant"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17632078",
+          "name": "Beetle Bochsler",
+          "role": "Actor",
+          "characters": [
+            "Lady Alexie"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17735699",
+          "name": "Laderal Durocher",
+          "role": "Actor",
+          "characters": [
+            "Ominous Figure"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm9542517",
+          "name": "Emma Hong",
+          "role": "Actress",
+          "characters": [
+            "Gili"
+          ],
+          "creditedAs": "as Ari Hong",
+          "photo": "https://m.media-amazon.com/images/M/MV5BNzA1NWM3ZjgtOWFmYi00OGIzLTk1OTEtODAxNzNmYmJjZmY1XkEyXkFqcGc@._V1_CR123,1,2667,4000_.jpg"
+        },
+        {
+          "id": "nm14589470",
+          "name": "Janey Laney",
+          "role": "Actress",
+          "characters": [
+            "Hea"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17609026",
+          "name": "Aeria Nephri",
+          "role": "Actress",
+          "characters": [
+            "Asta"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17359488",
+          "name": "Zephyr Olhaus",
+          "role": "Actress",
+          "characters": [
+            "Idelfia"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17735698",
+          "name": "Ethin L. Santos",
+          "role": "Actor",
+          "characters": [
+            "Ominous Figure"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17609024",
+          "name": "Jay Tan",
+          "role": "Actor",
+          "characters": [
+            "Elvir"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17609103",
+          "name": "Marc Joseph Teske",
+          "role": "Actor",
+          "characters": [
+            "The Esteemed One"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17609040",
+          "name": "Ravan Vilken",
+          "role": "Actress",
+          "characters": [
+            "Oriana"
+          ],
+          "creditedAs": null,
+          "photo": null
+        }
+      ],
+      "studios": [
+        {
+          "id": "co0965603",
+          "name": "IAmMaddieFilms"
+        }
+      ],
+      "countries": [
+        "US"
+      ],
+      "languages": [
+        "English"
+      ],
+      "keywords": [],
+      "akas": [],
+      "filmingLocations": [],
+      "episodes": null,
+      "series": null,
+      "videos": [],
+      "gallery": [
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDIwNjhlYWUtZjQ2NC00YWMxLTk4ZGEtYjg0ODBkYmQ2N2VhXkEyXkFqcGc@._V1_.jpg",
+          "width": 4500,
+          "height": 8280,
+          "caption": "Svefnthorn: The Omen (2025)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDAwMTBjMzEtNjFmYi00ZGYwLTkxYjMtNzI0ZTdlMmYxNDJiXkEyXkFqcGc@._V1_.jpg",
+          "width": 1748,
+          "height": 2480,
+          "caption": "Aeria Nephri and Emma Hong in Svefnthorn: The Omen (2025)"
+        }
+      ],
+      "trivia": [],
+      "externalLinks": [],
+      "awards": {
+        "wins": 0,
+        "nominations": 0
+      },
+      "fetchedAt": "2026-11-23T12:38:58.917Z",
+      "source": "imdb"
+    },
+    {
+      "imdbId": "tt48184501",
+      "imdbUrl": "https://www.imdb.com/title/tt48184501/",
+      "title": "Deserted Skies",
+      "originalTitle": "Deserted Skies",
+      "titleType": "Short",
+      "isSeries": false,
+      "year": 2026,
+      "endYear": null,
+      "releaseDate": "2026-09-28",
+      "releaseCountry": "Thailand",
+      "runtimeMinutes": 24,
+      "certificate": null,
+      "genres": [
+        "Short",
+        "Action",
+        "Drama",
+        "Western"
+      ],
+      "interests": [
+        "Action",
+        "Drama",
+        "Short",
+        "Western"
+      ],
+      "plot": "After a world war leaves the surface too polluted for life, 16 year old Ari ends up in the care of Captain Stahl and his ruthless crew, trying to survive as they are hunted down by a new Empire seeking to bring order to the Sky-Frontier.",
+      "rating": {
+        "value": 8.6,
+        "votes": 11
+      },
+      "metascore": null,
+      "poster": {
+        "url": "https://m.media-amazon.com/images/M/MV5BMDhkNjBhOTUtMTEzMS00MmViLTk2NmEtOWI5MGZlZjg5NWE5XkEyXkFqcGc@._V1_.jpg",
+        "width": 2000,
+        "height": 3000,
+        "caption": "Loserblu in Deserted Skies (2026)",
+        "local": "database/posters/tt48184501.jpg"
+      },
+      "directors": [
+        {
+          "id": "nm18979292",
+          "name": "Codey"
+        }
+      ],
+      "writers": [
+        {
+          "id": "nm18979292",
+          "name": "Codey"
+        }
+      ],
+      "stars": [
+        {
+          "id": "nm18979405",
+          "name": "Ray"
+        },
+        {
+          "id": "nm18979293",
+          "name": "Loserblu"
+        },
+        {
+          "id": "nm18979299",
+          "name": "Landn"
+        }
+      ],
+      "creators": [],
+      "cast": [
+        {
+          "id": "nm18979405",
+          "name": "Ray",
+          "role": "Actress",
+          "characters": [
+            "Ari"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18979293",
+          "name": "Loserblu",
+          "role": "Actor",
+          "characters": [
+            "Eudicus"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18979299",
+          "name": "Landn",
+          "role": "Actor",
+          "characters": [
+            "Stahl"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18979300",
+          "name": "Embers_Song",
+          "role": "Actress",
+          "characters": [
+            "Kip"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18979303",
+          "name": "Bleu",
+          "role": "Actor",
+          "characters": [
+            "Borel"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18979298",
+          "name": "Tea0chi",
+          "role": "Actor",
+          "characters": [
+            "Kina"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm8298911",
+          "name": "Jack Howarth",
+          "role": "Actor",
+          "characters": [
+            "Stronjer"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18979302",
+          "name": "Silanchen Corvus",
+          "role": "Actor",
+          "characters": [
+            "Chona"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18979301",
+          "name": "SunDreigon",
+          "role": "Actor",
+          "characters": [
+            "Clerk"
+          ],
+          "creditedAs": null,
+          "photo": null
+        }
+      ],
+      "studios": [],
+      "countries": [
+        "TH"
+      ],
+      "languages": [
+        "English"
+      ],
+      "keywords": [],
+      "akas": [],
+      "filmingLocations": [],
+      "episodes": null,
+      "series": null,
+      "videos": [],
+      "gallery": [
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmZkOTQ4ZDUtMTlhYS00NmI5LWE4ZTktNGZkYzBlNWQ3ZTMxXkEyXkFqcGc@._V1_.jpg",
+          "width": 1920,
+          "height": 1080,
+          "caption": "Silanchen Corvus and Ray in Deserted Skies (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTllZGI2ZDEtNTBjMy00YjgzLTk2NWUtZTFhY2IwOTAzODE0XkEyXkFqcGc@._V1_.jpg",
+          "width": 1705,
+          "height": 720,
+          "caption": "Silanchen Corvus in Deserted Skies (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BZmJmZThjNWEtMTM4Yi00MWQwLWFmMzEtMDllMTdkYzcxZTI2XkEyXkFqcGc@._V1_.jpg",
+          "width": 1705,
+          "height": 715,
+          "caption": "Deserted Skies (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDhkNjBhOTUtMTEzMS00MmViLTk2NmEtOWI5MGZlZjg5NWE5XkEyXkFqcGc@._V1_.jpg",
+          "width": 2000,
+          "height": 3000,
+          "caption": "Loserblu in Deserted Skies (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTgxMTdiYzQtMDliNi00ZjRkLWIwNTQtNDJkNjg5YzFiMjhkXkEyXkFqcGc@._V1_.jpg",
+          "width": 3460,
+          "height": 1448,
+          "caption": "Deserted Skies (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjE4YTI1ZDAtM2JhNC00N2I3LTlkMDEtYmFlNDdlZDk4ZmFmXkEyXkFqcGc@._V1_.jpg",
+          "width": 3460,
+          "height": 1448,
+          "caption": "Deserted Skies (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTcwNGM3YzAtZTQyNi00YjAwLWE2YmMtNDdhMTk0M2ZlYTE2XkEyXkFqcGc@._V1_.jpg",
+          "width": 1600,
+          "height": 900,
+          "caption": "Loserblu in Deserted Skies (2026)"
+        }
+      ],
+      "trivia": [
+        "Corvus, who voices Chona, once saw kids at his school play-fighting, asked what they were doing, showed him the series pilot, not knowing he was in it."
+      ],
+      "externalLinks": [],
+      "awards": {
+        "wins": 0,
+        "nominations": 0
+      },
+      "fetchedAt": "2026-11-23T12:39:00.629Z",
+      "source": "imdb"
+    },
+    {
+      "imdbId": "tt39289432",
+      "imdbUrl": "https://www.imdb.com/title/tt39289432/",
+      "title": "The Unstable SMP",
+      "originalTitle": "Unstable SMP",
+      "titleType": "TV Series",
+      "isSeries": true,
+      "year": 2024,
+      "endYear": null,
+      "releaseDate": "2024-04-22",
+      "releaseCountry": "United Kingdom",
+      "runtimeMinutes": 60,
+      "certificate": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama",
+        "Mystery",
+        "Thriller"
+      ],
+      "interests": [
+        "Action",
+        "Adventure",
+        "Drama",
+        "Mystery",
+        "Thriller"
+      ],
+      "plot": "On a chaotic scenario, rival factions battle for power as betrayals, shifting alliances, and hidden secrets push friendships to the brink in a constantly changing Minecraft world.",
+      "rating": {
+        "value": 9.4,
+        "votes": 2163
+      },
+      "metascore": null,
+      "poster": {
+        "url": "https://m.media-amazon.com/images/M/MV5BNjM1ZTNiOTEtMjI0MC00NjE5LWE3MjctZGZiODJiYmM1NjhkXkEyXkFqcGc@._V1_.jpg",
+        "width": 1280,
+        "height": 720,
+        "caption": "The Unstable SMP (2024)",
+        "local": "database/posters/tt39289432.jpg"
+      },
+      "directors": [],
+      "writers": [],
+      "stars": [
+        {
+          "id": "nm18073673",
+          "name": "Wemmbu"
+        },
+        {
+          "id": "nm18073665",
+          "name": "Flamefrags"
+        },
+        {
+          "id": "nm18150956",
+          "name": "ParrotX2"
+        }
+      ],
+      "creators": [],
+      "cast": [
+        {
+          "id": "nm18073673",
+          "name": "Wemmbu",
+          "role": "Actor",
+          "characters": [
+            "Wemmbu",
+            "Commander X"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073665",
+          "name": "Flamefrags",
+          "role": "Actor",
+          "characters": [
+            "FlameFrags"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18150956",
+          "name": "ParrotX2",
+          "role": "Actor",
+          "characters": [
+            "Parrot",
+            "ParrotX2"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073664",
+          "name": "LettuceK",
+          "role": "Actor",
+          "characters": [
+            "LettuceK",
+            "Random Chungus",
+            "Luke4472"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18763557",
+          "name": "Twirps",
+          "role": "Actor",
+          "characters": [
+            "Deputy_Ace",
+            "Random Chungus",
+            "Arachn1d"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073660",
+          "name": "SpokeIsHere",
+          "role": "Actor",
+          "characters": [
+            "Spoke"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073663",
+          "name": "Eggchan",
+          "role": "Actor",
+          "characters": [
+            "Eggchan"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073659",
+          "name": "TheoBaldTheBird",
+          "role": "Actor",
+          "characters": [
+            "TheobaldTheBird",
+            "Mafia Player",
+            "Toxic Player"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18543386",
+          "name": "JadenMan",
+          "role": "Actor",
+          "characters": [
+            "Jaden_MAN",
+            "Toxic Player",
+            "Random Chungus"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073669",
+          "name": "Mapicc",
+          "role": "Actor",
+          "characters": [
+            "Mapicc",
+            "Moonwalking Spy",
+            "ApexPoint"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073668",
+          "name": "Jumperwho",
+          "role": "Actress",
+          "characters": [
+            "JumperWho",
+            "Mafia Player",
+            "AwesomeB0t_"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm16567654",
+          "name": "Loppezz",
+          "role": "Actor",
+          "characters": [
+            "Loppezz",
+            "Random Chungus",
+            "Mafia Player"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18763483",
+          "name": "TeamKalal",
+          "role": "Actor",
+          "characters": [
+            "SargeLAW",
+            "The_CodMaster14",
+            "Random Chungus"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073667",
+          "name": "Leowook",
+          "role": "Actor",
+          "characters": [
+            "Leow0ok",
+            "ScoodleDuc",
+            "Mafia Player"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18763560",
+          "name": "HoraceAltman",
+          "role": "Actor",
+          "characters": [
+            "Horace",
+            "Random Chungus",
+            "Ocean Ranger"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073671",
+          "name": "Lomedy",
+          "role": "Actor",
+          "characters": [
+            "Lomedy",
+            "Random Chungus",
+            "Toxic Player"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18763904",
+          "name": "TheSorta",
+          "role": "Actor",
+          "characters": [
+            "Mafia Player",
+            "Random Chungus",
+            "Toxic Player"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18073662",
+          "name": "Princezam",
+          "role": "Actor",
+          "characters": [
+            "PrinceZam",
+            "Mafia Player",
+            "TrucksandTrains"
+          ],
+          "creditedAs": null,
+          "photo": null
+        }
+      ],
+      "studios": [],
+      "countries": [
+        "US"
+      ],
+      "languages": [
+        "English"
+      ],
+      "keywords": [],
+      "akas": [],
+      "filmingLocations": [],
+      "episodes": {
+        "total": 161,
+        "seasons": [
+          1,
+          2,
+          3
+        ],
+        "years": [
+          2024,
+          2025,
+          2026
+        ]
+      },
+      "series": null,
+      "videos": [],
+      "gallery": [
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGY5Yjc0YWMtZWUzNi00NmU1LTg0M2YtMGNjODU1OWFlOGVjXkEyXkFqcGc@._V1_.jpg",
+          "width": 1200,
+          "height": 675,
+          "caption": "Wemmbu and ParrotX2 in The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2E2YWExNzEtOWJhZS00ZGY4LWJkMGUtM2ZjNDBiYTlmMzNhXkEyXkFqcGc@._V1_.jpg",
+          "width": 1764,
+          "height": 933,
+          "caption": "The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BN2IwNDM1MGYtNzA1Zi00MzhmLWExYjAtYzVmNjFlYzhhMzNhXkEyXkFqcGc@._V1_.jpg",
+          "width": 1917,
+          "height": 1077,
+          "caption": "The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWFjMjNhODctNTlhMy00NmE3LTliNzQtN2UzNjQ4ODQ0MzM1XkEyXkFqcGc@._V1_.jpg",
+          "width": 1079,
+          "height": 531,
+          "caption": "The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmU0MmQ4NGItZmQ4My00YmUzLTkwYjctZTJiODM0NDQ0NGEyXkEyXkFqcGc@._V1_.jpg",
+          "width": 1179,
+          "height": 658,
+          "caption": "SpokeIsHere in The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmNlZGJhMmYtNGViMi00MDU2LWI3YmEtY2FlZjQ3NjkwMmI5XkEyXkFqcGc@._V1_.jpg",
+          "width": 1179,
+          "height": 655,
+          "caption": "LettuceK, Flamefrags, Wemmbu, and Falconu in The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNGQ5YjdmNjItNjc1MC00MmEyLWJkN2ItNWNiMjJkOTEwYWM1XkEyXkFqcGc@._V1_.jpg",
+          "width": 1179,
+          "height": 658,
+          "caption": "Flamefrags in The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTJlYmMwYWItYTA5Mi00OGVkLWEzZGUtZTVkMjM3MDM3YThlXkEyXkFqcGc@._V1_.jpg",
+          "width": 1179,
+          "height": 663,
+          "caption": "The Unstable SMP (2024)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzRkNzQxNDQtNTQ0YS00ZmViLTkxY2UtOWI2ZTgzZDk3ODU0XkEyXkFqcGc@._V1_.jpg",
+          "width": 1179,
+          "height": 655,
+          "caption": "Ashswag, SpokeIsHere, and Mapicc in The Unstable SMP (2024)"
+        }
+      ],
+      "trivia": [
+        "You can be part of the videos by joining the official discord server"
+      ],
+      "externalLinks": [],
+      "awards": {
+        "wins": 0,
+        "nominations": 0
+      },
+      "fetchedAt": "2026-11-23T12:39:02.102Z",
+      "source": "imdb"
+    },
+    {
+      "imdbId": "tt43685171",
+      "imdbUrl": "https://www.imdb.com/title/tt43685171/",
+      "title": "Hamilton: A Minecraft Musical",
+      "originalTitle": "Hamilton: A Minecraft Musical",
+      "titleType": "Video",
+      "isSeries": false,
+      "year": 2026,
+      "endYear": null,
+      "releaseDate": "2026-07-11",
+      "releaseCountry": "United States",
+      "runtimeMinutes": 73,
+      "certificate": null,
+      "genres": [
+        "Musical"
+      ],
+      "interests": [
+        "Musical"
+      ],
+      "plot": null,
+      "rating": {
+        "value": 9.2,
+        "votes": 15
+      },
+      "metascore": null,
+      "poster": {
+        "url": "https://m.media-amazon.com/images/M/MV5BYmNlMDQ0Y2QtM2M1YS00ODdjLWI4YTYtMTUzNjg3YjcyYzJiXkEyXkFqcGc@._V1_.jpg",
+        "width": 2000,
+        "height": 3000,
+        "caption": "Hamilton: A Minecraft Musical (2026)",
+        "local": "database/posters/tt43685171.jpg"
+      },
+      "directors": [
+        {
+          "id": "nm18711522",
+          "name": "Ambiverted"
+        },
+        {
+          "id": "nm18711512",
+          "name": "Dogchews"
+        },
+        {
+          "id": "nm18711513",
+          "name": "Sabnaq"
+        }
+      ],
+      "writers": [],
+      "stars": [
+        {
+          "id": "nm18711515",
+          "name": "EdHed"
+        },
+        {
+          "id": "nm18711518",
+          "name": "Fleurontoxica"
+        },
+        {
+          "id": "nm18711511",
+          "name": "Grm101"
+        }
+      ],
+      "creators": [],
+      "cast": [
+        {
+          "id": "nm18711515",
+          "name": "EdHed",
+          "role": "Actor",
+          "characters": [
+            "Alexander Hamilton"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711518",
+          "name": "Fleurontoxica",
+          "role": "Actress",
+          "characters": [
+            "Elizabeth Schuyler"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711511",
+          "name": "Grm101",
+          "role": "Actor",
+          "characters": [
+            "Marquis de Lafayette"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711517",
+          "name": "Lemonsilly",
+          "role": "Actor",
+          "characters": [
+            "Samuel Seabury"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711514",
+          "name": "LilCeen",
+          "role": "Actor",
+          "characters": [
+            "John Laurens"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711523",
+          "name": "Meagon",
+          "role": "Actress",
+          "characters": [
+            "Angelica Schuyler"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711510",
+          "name": "MyronIsDead",
+          "role": "Actor",
+          "characters": [
+            "Aaron Burr"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711520",
+          "name": "PrincessPinecone",
+          "role": "Actress",
+          "characters": [
+            "Peggy Schuyler"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711524",
+          "name": "Ramseyer",
+          "role": "Actor",
+          "characters": [
+            "Charles Lee"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711513",
+          "name": "Sabnaq",
+          "role": "Actor",
+          "characters": [
+            "George Washington"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711521",
+          "name": "Schpood",
+          "role": "Actor",
+          "characters": [
+            "King George III"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18711519",
+          "name": "Thedrifter823",
+          "role": "Actor",
+          "characters": [
+            "Hercules Mulligan"
+          ],
+          "creditedAs": "voice",
+          "photo": null
+        }
+      ],
+      "studios": [],
+      "countries": [
+        "US"
+      ],
+      "languages": [
+        "English"
+      ],
+      "keywords": [],
+      "akas": [],
+      "filmingLocations": [],
+      "episodes": null,
+      "series": null,
+      "videos": [],
+      "gallery": [
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGIyOWYyZjQtNzQ4NC00OGVjLWE1YWMtMTY3MzE5M2NjNzc3XkEyXkFqcGc@._V1_.jpg",
+          "width": 1757,
+          "height": 756,
+          "caption": "MyronIsDead, Grm101, Dogchews, Sabnaq, LilCeen, EdHed, Lemonsilly, Fleurontoxica, Thedrifter823, PrincessPinecone, Schpood, Ambiverted, Meagon, and Ramseyer in Hamilton: A Minecraft Musical (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmNlMDQ0Y2QtM2M1YS00ODdjLWI4YTYtMTUzNjg3YjcyYzJiXkEyXkFqcGc@._V1_.jpg",
+          "width": 2000,
+          "height": 3000,
+          "caption": "Hamilton: A Minecraft Musical (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmY2OTE5ZWMtN2IzOS00OWFhLTgxMTctOGE4ZGE2OWRkMGZmXkEyXkFqcGc@._V1_.jpg",
+          "width": 1280,
+          "height": 720,
+          "caption": "Hamilton: A Minecraft Musical (2026)"
+        }
+      ],
+      "trivia": [],
+      "externalLinks": [],
+      "awards": {
+        "wins": 0,
+        "nominations": 0
+      },
+      "fetchedAt": "2026-11-23T12:39:03.631Z",
+      "source": "imdb"
+    },
+    {
+      "imdbId": "tt6058886",
+      "imdbUrl": "https://www.imdb.com/title/tt6058886/",
+      "title": "Minicraft Village Shorts",
+      "originalTitle": "Minecraft Villagers",
+      "titleType": "TV Mini Series",
+      "isSeries": true,
+      "year": 2013,
+      "endYear": null,
+      "releaseDate": "2013-04-23",
+      "releaseCountry": "United Kingdom",
+      "runtimeMinutes": null,
+      "certificate": "PG",
+      "genres": [
+        "Animation",
+        "Comedy"
+      ],
+      "interests": [
+        "Animation",
+        "Comedy"
+      ],
+      "plot": "Villagers tell you whats happening in the Minecraft world.",
+      "rating": {
+        "value": 8.3,
+        "votes": 242
+      },
+      "metascore": null,
+      "poster": {
+        "url": "https://m.media-amazon.com/images/M/MV5BNjEyNjIyNTc2OV5BMl5BanBnXkFtZTgwNjA0MDgxMDI@._V1_.jpg",
+        "width": 500,
+        "height": 375,
+        "caption": "Minicraft Village Shorts (2013)",
+        "local": "database/posters/tt6058886.jpg"
+      },
+      "directors": [
+        {
+          "id": "nm6304425",
+          "name": "Christine Atkin"
+        },
+        {
+          "id": "nm6304422",
+          "name": "Liam Giles"
+        },
+        {
+          "id": "nm5665787",
+          "name": "Dan Lloyd"
+        }
+      ],
+      "writers": [],
+      "stars": [
+        {
+          "id": "nm5665787",
+          "name": "Dan Lloyd"
+        },
+        {
+          "id": "nm9060213",
+          "name": "Joel Louis Houghton"
+        },
+        {
+          "id": "nm7724468",
+          "name": "Paul David Everatt"
+        }
+      ],
+      "creators": [
+        {
+          "id": "nm6304425",
+          "name": "Christine Atkin"
+        },
+        {
+          "id": "nm6304422",
+          "name": "Liam Giles"
+        },
+        {
+          "id": "nm5665787",
+          "name": "Dan Lloyd"
+        }
+      ],
+      "cast": [
+        {
+          "id": "nm5665787",
+          "name": "Dan Lloyd",
+          "role": "Actor",
+          "characters": [
+            "Villagers"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm9060213",
+          "name": "Joel Louis Houghton",
+          "role": "Actor",
+          "characters": [
+            "Undetermined Role",
+            "The Witch",
+            "Giant Creeper"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm7724468",
+          "name": "Paul David Everatt",
+          "role": "Actor",
+          "characters": [
+            "Jeff the Evil Roomba",
+            "Squid"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm7090507",
+          "name": "Chuck Fresh",
+          "role": "Actor",
+          "characters": [
+            "Additional Voices",
+            "Narrator"
+          ],
+          "creditedAs": null,
+          "photo": "https://m.media-amazon.com/images/M/MV5BNTYyNzQ4MTAtNTYzOS00ZWNiLTllNTctYWJjOTVlMTE5Y2Q5XkEyXkFqcGc@._V1_.jpg"
+        },
+        {
+          "id": "nm9060215",
+          "name": "Brendaniel Hurlbert",
+          "role": "Actor",
+          "characters": [
+            "Additional Voices"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm10826674",
+          "name": "Kaitlyn Barstow",
+          "role": "Actress",
+          "characters": [
+            "Phoneline Woman"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm11535701",
+          "name": "Harry Steele",
+          "role": "Actor",
+          "characters": [
+            "Creepers"
+          ],
+          "creditedAs": "voice",
+          "photo": null
+        }
+      ],
+      "studios": [
+        {
+          "id": "co0427801",
+          "name": "Element Animation"
+        }
+      ],
+      "countries": [
+        "GB"
+      ],
+      "languages": [
+        "English"
+      ],
+      "keywords": [
+        "minecraft",
+        "youtube",
+        "tv mini series"
+      ],
+      "akas": [
+        "Villagers in Minecraft"
+      ],
+      "filmingLocations": [],
+      "episodes": {
+        "total": 25,
+        "seasons": [
+          1,
+          2
+        ],
+        "years": [
+          2013,
+          2014,
+          2015,
+          2016,
+          2018,
+          2019,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      },
+      "series": null,
+      "videos": [],
+      "gallery": [
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjEyNjIyNTc2OV5BMl5BanBnXkFtZTgwNjA0MDgxMDI@._V1_.jpg",
+          "width": 500,
+          "height": 375,
+          "caption": "Minicraft Village Shorts (2013)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmYzOWViODktNTJlZi00OGQ4LTkwNmEtNjdkMmRmYzRhMzNhXkEyXkFqcGc@._V1_.jpg",
+          "width": 807,
+          "height": 454,
+          "caption": "Minicraft Village Shorts (2013)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDU1YjBhOWMtYTA3MS00ZGJlLTliOWQtZTY1YmM3YzIxNTU0XkEyXkFqcGc@._V1_.jpg",
+          "width": 1280,
+          "height": 720,
+          "caption": "Minicraft Village Shorts (2013)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmIzYWFkMmUtZGI1ZC00NjkzLWJiMmYtMTAyMTI1ZTM5YmJjXkEyXkFqcGc@._V1_.jpg",
+          "width": 1280,
+          "height": 720,
+          "caption": "What's in My BIG Sack!? (2022)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjQxYmMxNjQtMDNlNS00ODdmLTgxNTQtYTQ2YWVhYzgxNjhmXkEyXkFqcGc@._V1_.jpg",
+          "width": 886,
+          "height": 1620,
+          "caption": "Villager Shorts - A New Mob?! (2022)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjY3YTQzYmUtMDRjMi00NzA3LTkyMDQtMjc3Y2JhNjc4ZGMxXkEyXkFqcGc@._V1_.jpg",
+          "width": 2160,
+          "height": 1203,
+          "caption": "Villager (and Pillager?) News (2019)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzlmMzZhNzAtOTEwZC00ZGE5LWE3YjgtZmEyZmQzNTI0ZTVmXkEyXkFqcGc@._V1_.jpg",
+          "width": 2160,
+          "height": 1203,
+          "caption": "Villager (and Pillager?) News (2019)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWEwOWQ2NjAtNWIxYi00NDcyLTgyMmUtODk0N2EwZDNjNDNiXkEyXkFqcGc@._V1_.jpg",
+          "width": 2160,
+          "height": 1196,
+          "caption": "Villager (and Pillager?) News (2019)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzVjZDJiNWUtYzNhOC00MzNlLTg0N2YtM2UxMDVkZTYzMTIwXkEyXkFqcGc@._V1_.jpg",
+          "width": 2160,
+          "height": 1179,
+          "caption": "Minicraft Village Shorts (2013)"
+        }
+      ],
+      "trivia": [],
+      "externalLinks": [],
+      "awards": {
+        "wins": 0,
+        "nominations": 0
+      },
+      "fetchedAt": "2026-11-23T12:39:05.342Z",
+      "source": "imdb"
+    },
+    {
+      "imdbId": "tt48403578",
+      "imdbUrl": "https://www.imdb.com/title/tt48403578/",
+      "title": "Reckoning: A Minecraft Film",
+      "originalTitle": "Reckoning: A Minecraft Film",
+      "titleType": "Movie",
+      "isSeries": false,
+      "year": 2026,
+      "endYear": null,
+      "releaseDate": "2026-10-02",
+      "releaseCountry": "United States",
+      "runtimeMinutes": 53,
+      "certificate": null,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure",
+        "Fantasy",
+        "Thriller"
+      ],
+      "interests": [
+        "Action",
+        "Adventure",
+        "Animation",
+        "Fantasy",
+        "Thriller"
+      ],
+      "plot": "A MAN embarks on a journey to redeem his village, a quest for vengeance against THE MARAUDERS who wronged his people. Entirely Made and Presented in Minecraft with No AI.",
+      "rating": {
+        "value": 8.3,
+        "votes": 8
+      },
+      "metascore": null,
+      "poster": {
+        "url": "https://m.media-amazon.com/images/M/MV5BOTdmNGZlYzItZjU2OS00NGQ1LThmZmItZjAxYTRhNjkyMTEwXkEyXkFqcGc@._V1_.jpg",
+        "width": 2560,
+        "height": 3840,
+        "caption": "Reckoning: A Minecraft Film (2026)",
+        "local": "database/posters/tt48403578.jpg"
+      },
+      "directors": [
+        {
+          "id": "nm18991832",
+          "name": "Bhavishya Parashar"
+        }
+      ],
+      "writers": [],
+      "stars": [
+        {
+          "id": "nm18991829",
+          "name": "Manthan Dadheech"
+        },
+        {
+          "id": "nm18991836",
+          "name": "Aarav Grewal"
+        },
+        {
+          "id": "nm18991835",
+          "name": "Yug Joon"
+        }
+      ],
+      "creators": [],
+      "cast": [
+        {
+          "id": "nm18991829",
+          "name": "Manthan Dadheech",
+          "role": "Actor",
+          "characters": [],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18991836",
+          "name": "Aarav Grewal",
+          "role": "Actor",
+          "characters": [
+            "Protagonist"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18991835",
+          "name": "Yug Joon",
+          "role": "Actor",
+          "characters": [],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18991831",
+          "name": "Subhikshu Mehta",
+          "role": "Actor",
+          "characters": [],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18991834",
+          "name": "Devansh Sharma",
+          "role": "Actor",
+          "characters": [],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18991833",
+          "name": "Slade Worthington",
+          "role": "Actor",
+          "characters": [],
+          "creditedAs": null,
+          "photo": null
+        }
+      ],
+      "studios": [],
+      "countries": [
+        "IN"
+      ],
+      "languages": [
+        "English"
+      ],
+      "keywords": [
+        "pc gaming",
+        "minecraft",
+        "machinima",
+        "video game",
+        "game"
+      ],
+      "akas": [],
+      "filmingLocations": [],
+      "episodes": null,
+      "series": null,
+      "videos": [],
+      "gallery": [
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BODg5YmFjYTktMWJkOS00ODQ1LTg3MjItZTlhZjdhN2YyYjY4XkEyXkFqcGc@._V1_.jpg",
+          "width": 1556,
+          "height": 1080,
+          "caption": "Reckoning: A Minecraft Film (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzdhZDlmNDgtNjA2ZS00NTVhLWI3OTMtM2UxMTkzYjk0NzRhXkEyXkFqcGc@._V1_.jpg",
+          "width": 1441,
+          "height": 1079,
+          "caption": "Reckoning: A Minecraft Film (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzIwOWUzYWQtZTQyZS00OWJhLTk2YWItZTA5MmIyMmEyNTQ2XkEyXkFqcGc@._V1_.jpg",
+          "width": 1445,
+          "height": 1079,
+          "caption": "Reckoning: A Minecraft Film (2026)"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTdmNGZlYzItZjU2OS00NGQ1LThmZmItZjAxYTRhNjkyMTEwXkEyXkFqcGc@._V1_.jpg",
+          "width": 2560,
+          "height": 3840,
+          "caption": "Reckoning: A Minecraft Film (2026)"
+        }
+      ],
+      "trivia": [],
+      "externalLinks": [],
+      "awards": {
+        "wins": 0,
+        "nominations": 0
+      },
+      "fetchedAt": "2026-11-23T12:39:07.123Z",
+      "source": "imdb"
+    }
+  ]
+}

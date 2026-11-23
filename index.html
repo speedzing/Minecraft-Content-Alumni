@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minecraft Content Alumni — Title Database</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, sans-serif; margin: 0 auto; padding: 16px; max-width: 1100px; line-height: 1.45; }
+  header { border-bottom: 1px solid #8884; margin-bottom: 16px; }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  .meta { color: #888; font-size: .85rem; margin: 0 0 12px; }
+  input { width: 100%; padding: 8px; font: inherit; box-sizing: border-box; margin-bottom: 16px; }
+  .title { display: grid; grid-template-columns: 160px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid #8884; }
+  .title img { width: 160px; height: auto; display: block; background: #8882; }
+  .title h2 { margin: 0; font-size: 1.15rem; }
+  .title p { margin: 6px 0; }
+  .muted { color: #888; font-size: .9rem; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 8px 0; font-size: .9rem; }
+  dt { color: #888; }
+  dd { margin: 0; }
+  details { margin-top: 6px; font-size: .9rem; }
+  .gallery { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .gallery img { height: 80px; width: auto; }
+  pre { overflow-x: auto; font-size: .75rem; background: #8881; padding: 8px; }
+  @media (max-width: 560px) { .title { grid-template-columns: 1fr; } .title img { width: 140px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Minecraft Content Alumni — Title Database</h1>
+  <p class="meta" id="meta">Loading…</p>
+</header>
+<input id="q" type="search" placeholder="Filter by title, person, genre, studio…" aria-label="Filter titles">
+<p class="meta">Raw data: <a href="database/titles.json">database/titles.json</a></p>
+<main id="list"></main>
+
+<script>
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const names = arr => (arr || []).map(p => esc(p.name)).join(', ') || '—';
+
+function render(t) {
+  const yrs = t.year + (t.isSeries ? '–' + (t.endYear || '') : '');
+  const rating = t.rating.value ? `${t.rating.value}/10 (${t.rating.votes.toLocaleString()} votes)` : 'Not yet rated';
+  const cast = t.cast.map(c => `<li>${esc(c.name)}${c.characters.length ? ' — ' + esc(c.characters.join(' / ')) : ''}${c.creditedAs ? ' <span class="muted">(' + esc(c.creditedAs) + ')</span>' : ''}</li>`).join('');
+  const gallery = t.gallery.map(g => `<a href="${esc(g.url)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(g.url.replace('._V1_.jpg', '._V1_UY160_.jpg'))}" alt="${esc(g.caption)}" title="${esc(g.caption)}"></a>`).join('');
+  return `<article class="title" data-search="${esc(JSON.stringify(t).toLowerCase())}">
+    <a href="${esc(t.poster.local)}" target="_blank"><img loading="lazy" src="${esc(t.poster.local)}" alt="${esc(t.title)} poster"></a>
+    <div>
+      <h2>${esc(t.title)} <span class="muted">(${esc(yrs)})</span></h2>
+      <p class="muted">${esc(t.titleType)}${t.runtimeMinutes ? ' · ' + t.runtimeMinutes + ' min' : ''}${t.certificate ? ' · ' + esc(t.certificate) : ''} · ${esc(t.genres.join(', '))}</p>
+      <p>${esc(t.plot) || '<span class="muted">No synopsis on IMDb.</span>'}</p>
+      <dl>
+        <dt>IMDb rating</dt><dd>${esc(rating)}</dd>
+        <dt>Released</dt><dd>${esc(t.releaseDate || '—')}${t.releaseCountry ? ' (' + esc(t.releaseCountry) + ')' : ''}</dd>
+        ${t.originalTitle && t.originalTitle !== t.title ? `<dt>Original title</dt><dd>${esc(t.originalTitle)}</dd>` : ''}
+        ${t.creators.length ? `<dt>Creators</dt><dd>${names(t.creators)}</dd>` : ''}
+        <dt>Directors</dt><dd>${names(t.directors)}</dd>
+        <dt>Writers</dt><dd>${names(t.writers)}</dd>
+        <dt>Stars</dt><dd>${names(t.stars)}</dd>
+        <dt>Studios</dt><dd>${names(t.studios)}</dd>
+        ${t.episodes ? `<dt>Episodes</dt><dd>${t.episodes.total} across ${t.episodes.seasons.length} season(s)</dd>` : ''}
+        <dt>Country / language</dt><dd>${esc(t.countries.join(', '))} · ${esc(t.languages.join(', '))}</dd>
+        ${t.keywords.length ? `<dt>Keywords</dt><dd>${esc(t.keywords.join(', '))}</dd>` : ''}
+        <dt>IMDb</dt><dd><a href="${esc(t.imdbUrl)}" target="_blank" rel="noopener">${esc(t.imdbId)}</a></dd>
+      </dl>
+      <details><summary>Cast (${t.cast.length})</summary><ul>${cast}</ul></details>
+      ${t.gallery.length ? `<details><summary>Gallery (${t.gallery.length})</summary><div class="gallery">${gallery}</div></details>` : ''}
+      ${t.trivia.length ? `<details><summary>Trivia</summary><ul>${t.trivia.map(x => '<li>' + esc(x) + '</li>').join('')}</ul></details>` : ''}
+      <details><summary>Raw JSON</summary><pre>${esc(JSON.stringify(t, null, 2))}</pre></details>
+    </div>
+  </article>`;
+}
+
+fetch('database/titles.json')
+  .then(r => r.json())
+  .then(db => {
+    document.getElementById('meta').textContent = `${db.count} titles · updated ${new Date(db.updatedAt).toLocaleString()}`;
+    const list = document.getElementById('list');
+    list.innerHTML = db.titles.map(render).join('');
+    document.getElementById('q').addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
+      for (const el of list.children) el.hidden = q && !el.dataset.search.includes(q);
+    });
+  })
+  .catch(err => { document.getElementById('meta').textContent = 'Could not load database: ' + err; });
+</script>
+</body>
+</html>
