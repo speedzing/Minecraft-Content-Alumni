@@ -99,7 +99,8 @@ for (const job of jobs) {
       try { title.poster = await savePoster(job.poster, id); }
       catch (err) { lines.push(`  - The poster could not be saved: ${err.message}.`); }
     }
-    if (!dryRun) { db.titles.push(title); known.add(id); }
+    if (dryRun) console.log(JSON.stringify(title, null, 2));
+    else { db.titles.push(title); known.add(id); }
     added++;
     lines.push(`- ${dryRun ? 'Found' : 'Added'} **${title.title}** (${title.year ?? 'year unknown'}, ${title.titleType}): \`${id}\`, ${title.cast.length} cast${title.poster ? ', poster saved' : ''}`);
   }
