@@ -1,8 +1,8 @@
 {
   "name": "Minecraft Content Alumni — Title Database",
   "version": 1,
-  "updatedAt": "2026-11-23T12:40:57.530Z",
-  "count": 6,
+  "updatedAt": "2026-11-23T12:58:39.419Z",
+  "count": 5,
   "titles": [
     {
       "imdbId": "tt37975367",
@@ -27,7 +27,7 @@
         "Fantasy",
         "Short"
       ],
-      "plot": "Svefnthorn: The Omen is the first part in a four part film series created by Madison Cyre and Mae Spencer. It follows a young girl named Gili living in a secluded village as her whole life turns upside down.",
+      "plot": "Svefnthorn: The Omen is the first part in a four part film series created by Mae Spencer. It follows a young girl named Gili living in a secluded village as her whole life turns upside down.",
       "rating": {
         "value": null,
         "votes": 0
@@ -42,19 +42,11 @@
       },
       "directors": [
         {
-          "id": "nm17359487",
-          "name": "Madison Cyre"
-        },
-        {
           "id": "nm5132437",
           "name": "Mae Spencer"
         }
       ],
       "writers": [
-        {
-          "id": "nm17359487",
-          "name": "Madison Cyre"
-        },
         {
           "id": "nm5132437",
           "name": "Mae Spencer"
@@ -1046,266 +1038,6 @@
         "nominations": 0
       },
       "fetchedAt": "2026-11-23T12:39:03.631Z",
-      "source": "imdb"
-    },
-    {
-      "imdbId": "tt6058886",
-      "imdbUrl": "https://www.imdb.com/title/tt6058886/",
-      "title": "Minicraft Village Shorts",
-      "originalTitle": "Minecraft Villagers",
-      "titleType": "TV Mini Series",
-      "isSeries": true,
-      "year": 2013,
-      "endYear": null,
-      "releaseDate": "2013-04-23",
-      "releaseCountry": "United Kingdom",
-      "runtimeMinutes": null,
-      "certificate": "PG",
-      "genres": [
-        "Animation",
-        "Comedy"
-      ],
-      "interests": [
-        "Animation",
-        "Comedy"
-      ],
-      "plot": "Villagers tell you whats happening in the Minecraft world.",
-      "rating": {
-        "value": 8.3,
-        "votes": 242
-      },
-      "metascore": null,
-      "poster": {
-        "url": "https://m.media-amazon.com/images/M/MV5BNjEyNjIyNTc2OV5BMl5BanBnXkFtZTgwNjA0MDgxMDI@._V1_.jpg",
-        "width": 500,
-        "height": 375,
-        "caption": "Minicraft Village Shorts (2013)",
-        "local": "database/posters/tt6058886.jpg"
-      },
-      "directors": [
-        {
-          "id": "nm6304425",
-          "name": "Christine Atkin"
-        },
-        {
-          "id": "nm6304422",
-          "name": "Liam Giles"
-        },
-        {
-          "id": "nm5665787",
-          "name": "Dan Lloyd"
-        }
-      ],
-      "writers": [],
-      "stars": [
-        {
-          "id": "nm5665787",
-          "name": "Dan Lloyd"
-        },
-        {
-          "id": "nm9060213",
-          "name": "Joel Louis Houghton"
-        },
-        {
-          "id": "nm7724468",
-          "name": "Paul David Everatt"
-        }
-      ],
-      "creators": [
-        {
-          "id": "nm6304425",
-          "name": "Christine Atkin"
-        },
-        {
-          "id": "nm6304422",
-          "name": "Liam Giles"
-        },
-        {
-          "id": "nm5665787",
-          "name": "Dan Lloyd"
-        }
-      ],
-      "cast": [
-        {
-          "id": "nm5665787",
-          "name": "Dan Lloyd",
-          "role": "Actor",
-          "characters": [
-            "Villagers"
-          ],
-          "creditedAs": null,
-          "photo": null
-        },
-        {
-          "id": "nm9060213",
-          "name": "Joel Louis Houghton",
-          "role": "Actor",
-          "characters": [
-            "Undetermined Role",
-            "The Witch",
-            "Giant Creeper"
-          ],
-          "creditedAs": null,
-          "photo": null
-        },
-        {
-          "id": "nm7724468",
-          "name": "Paul David Everatt",
-          "role": "Actor",
-          "characters": [
-            "Jeff the Evil Roomba",
-            "Squid"
-          ],
-          "creditedAs": null,
-          "photo": null
-        },
-        {
-          "id": "nm7090507",
-          "name": "Chuck Fresh",
-          "role": "Actor",
-          "characters": [
-            "Additional Voices",
-            "Narrator"
-          ],
-          "creditedAs": null,
-          "photo": "https://m.media-amazon.com/images/M/MV5BNTYyNzQ4MTAtNTYzOS00ZWNiLTllNTctYWJjOTVlMTE5Y2Q5XkEyXkFqcGc@._V1_.jpg"
-        },
-        {
-          "id": "nm9060215",
-          "name": "Brendaniel Hurlbert",
-          "role": "Actor",
-          "characters": [
-            "Additional Voices"
-          ],
-          "creditedAs": null,
-          "photo": null
-        },
-        {
-          "id": "nm10826674",
-          "name": "Kaitlyn Barstow",
-          "role": "Actress",
-          "characters": [
-            "Phoneline Woman"
-          ],
-          "creditedAs": null,
-          "photo": null
-        },
-        {
-          "id": "nm11535701",
-          "name": "Harry Steele",
-          "role": "Actor",
-          "characters": [
-            "Creepers"
-          ],
-          "creditedAs": "voice",
-          "photo": null
-        }
-      ],
-      "studios": [
-        {
-          "id": "co0427801",
-          "name": "Element Animation"
-        }
-      ],
-      "countries": [
-        "GB"
-      ],
-      "languages": [
-        "English"
-      ],
-      "keywords": [
-        "minecraft",
-        "youtube",
-        "tv mini series"
-      ],
-      "akas": [
-        "Villagers in Minecraft"
-      ],
-      "filmingLocations": [],
-      "episodes": {
-        "total": 25,
-        "seasons": [
-          1,
-          2
-        ],
-        "years": [
-          2013,
-          2014,
-          2015,
-          2016,
-          2018,
-          2019,
-          2022,
-          2023,
-          2024,
-          2025
-        ]
-      },
-      "series": null,
-      "videos": [],
-      "gallery": [
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BNjEyNjIyNTc2OV5BMl5BanBnXkFtZTgwNjA0MDgxMDI@._V1_.jpg",
-          "width": 500,
-          "height": 375,
-          "caption": "Minicraft Village Shorts (2013)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BYmYzOWViODktNTJlZi00OGQ4LTkwNmEtNjdkMmRmYzRhMzNhXkEyXkFqcGc@._V1_.jpg",
-          "width": 807,
-          "height": 454,
-          "caption": "Minicraft Village Shorts (2013)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BNDU1YjBhOWMtYTA3MS00ZGJlLTliOWQtZTY1YmM3YzIxNTU0XkEyXkFqcGc@._V1_.jpg",
-          "width": 1280,
-          "height": 720,
-          "caption": "Minicraft Village Shorts (2013)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BNmIzYWFkMmUtZGI1ZC00NjkzLWJiMmYtMTAyMTI1ZTM5YmJjXkEyXkFqcGc@._V1_.jpg",
-          "width": 1280,
-          "height": 720,
-          "caption": "What's in My BIG Sack!? (2022)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BYjQxYmMxNjQtMDNlNS00ODdmLTgxNTQtYTQ2YWVhYzgxNjhmXkEyXkFqcGc@._V1_.jpg",
-          "width": 886,
-          "height": 1620,
-          "caption": "Villager Shorts - A New Mob?! (2022)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BZjY3YTQzYmUtMDRjMi00NzA3LTkyMDQtMjc3Y2JhNjc4ZGMxXkEyXkFqcGc@._V1_.jpg",
-          "width": 2160,
-          "height": 1203,
-          "caption": "Villager (and Pillager?) News (2019)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BNzlmMzZhNzAtOTEwZC00ZGE5LWE3YjgtZmEyZmQzNTI0ZTVmXkEyXkFqcGc@._V1_.jpg",
-          "width": 2160,
-          "height": 1203,
-          "caption": "Villager (and Pillager?) News (2019)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BMWEwOWQ2NjAtNWIxYi00NDcyLTgyMmUtODk0N2EwZDNjNDNiXkEyXkFqcGc@._V1_.jpg",
-          "width": 2160,
-          "height": 1196,
-          "caption": "Villager (and Pillager?) News (2019)"
-        },
-        {
-          "url": "https://m.media-amazon.com/images/M/MV5BMzVjZDJiNWUtYzNhOC00MzNlLTg0N2YtM2UxMDVkZTYzMTIwXkEyXkFqcGc@._V1_.jpg",
-          "width": 2160,
-          "height": 1179,
-          "caption": "Minicraft Village Shorts (2013)"
-        }
-      ],
-      "trivia": [],
-      "externalLinks": [],
-      "awards": {
-        "wins": 0,
-        "nominations": 0
-      },
-      "fetchedAt": "2026-11-23T12:39:05.342Z",
       "source": "imdb"
     },
     {
