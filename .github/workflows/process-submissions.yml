@@ -11,6 +11,10 @@ on:
       imdb:
         description: IMDb links or IDs to import (any separator)
         required: true
+      find_links:
+        description: Also search YouTube for official videos (works for titles already listed)
+        type: boolean
+        default: false
       dry_run:
         description: Look up only, don't save
         type: boolean
@@ -44,6 +48,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           IMDB_INPUT: ${{ inputs.imdb }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+          FIND_LINKS: ${{ github.event_name == 'workflow_dispatch' && inputs.find_links }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/import-imdb.mjs
 
       - name: Commit database changes

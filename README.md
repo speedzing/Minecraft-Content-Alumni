@@ -13,6 +13,7 @@ This repository hosts the raw data store and a plain viewer page at https://spee
 | `database/posters/<imdbId>.<ext>` | Local copy of each title's poster. |
 | `scripts/imdb-datasets.mjs` | Looks titles up in IMDb's official daily datasets. Reusable as the future site's "Import from IMDb". |
 | `scripts/import-imdb.mjs` | Turns submissions or a list of IDs into database records. |
+| `scripts/youtube-links.mjs` | Searches YouTube for a title's official videos (needs the `YOUTUBE_API_KEY` secret). |
 | `scripts/reply.mjs` | Replies on, labels and closes submission issues. |
 | `.github/workflows/process-submissions.yml` | Runs the import on new submissions, daily for waiting ones, or manually. |
 | `.github/ISSUE_TEMPLATE/submission.yml` | The submission form (IMDb links, optional YouTube/official links, poster and synopsis). |
@@ -26,6 +27,14 @@ This repository hosts the raw data store and a plain viewer page at https://spee
 To add videos or links to a title that's already listed, submit its IMDb link together with the new links; only links not already stored are added.
 
 Up to 10 links per submission; titles already in the database are skipped. Titles not yet in IMDb's data (new pages take a day or two) get the `waiting` label and are retried every day at 03:30 UTC for up to 7 days, then labelled `needs-attention`.
+
+## Automatic YouTube links
+
+When the repository secret `YOUTUBE_API_KEY` is set, every newly imported title is searched on YouTube. A video is stored as an official link only when its title names the production and its channel matches someone credited on the title (director, writer, creator, cast, studio) or a channel already in its links; titles containing words like "unofficial", "fan made" or "reaction" never count. Other matches are kept in `linkSuggestions` and listed on the page as unverified, and the issue reply names them for review. Each search uses about 101 of the API's 10,000 free daily quota units.
+
+To search for titles already listed: Actions tab → **Import from IMDb** → **Run workflow**, paste the IDs and tick **find links** (with **dry run** to preview).
+
+Setting up the key: in Google Cloud Console create a project, enable **YouTube Data API v3**, create an API key under *Credentials* and restrict it to that API, then run `gh secret set YOUTUBE_API_KEY --repo speedzing/Minecraft-Content-Alumni` and paste the key when prompted.
 
 ## Importing directly
 
@@ -41,7 +50,7 @@ IMDb's datasets are provided for personal and non-commercial use: https://develo
 
 ## Record fields
 
-Each entry in `titles[]` has: `imdbId`, `imdbUrl`, `title`, `originalTitle`, `titleType`, `isSeries`, `year`, `endYear`, `releaseDate`, `releaseCountry`, `runtimeMinutes`, `certificate`, `genres`, `interests`, `plot`, `rating {value, votes}`, `metascore`, `poster {url, width, height, caption, local}`, `directors`, `writers`, `stars`, `creators`, `cast [{id, name, role, characters, creditedAs, photo}]`, `crew [{id, name, job}]` (dataset imports), `studios`, `countries`, `languages`, `keywords`, `akas`, `filmingLocations`, `episodes`, `series`, `videos`, `gallery`, `trivia`, `externalLinks`, `awards`, `links [{type, label, url, platform, youtubeId, channel, official, source}]` (type is `film`, `video`, `trailer`, `teaser`, `extra`, `soundtrack`, `playlist`, `channel` or `website`; `source` is `research` for links verified by hand from the creators' own channels, `submission` for submitted ones), `fetchedAt`, `source` (`imdb` or `imdb-datasets`), and `submission {issue, by, at}` for titles added through the form. Fields a source doesn't provide are `null` or empty.
+Each entry in `titles[]` has: `imdbId`, `imdbUrl`, `title`, `originalTitle`, `titleType`, `isSeries`, `year`, `endYear`, `releaseDate`, `releaseCountry`, `runtimeMinutes`, `certificate`, `genres`, `interests`, `plot`, `rating {value, votes}`, `metascore`, `poster {url, width, height, caption, local}`, `directors`, `writers`, `stars`, `creators`, `cast [{id, name, role, characters, creditedAs, photo}]`, `crew [{id, name, job}]` (dataset imports), `studios`, `countries`, `languages`, `keywords`, `akas`, `filmingLocations`, `episodes`, `series`, `videos`, `gallery`, `trivia`, `externalLinks`, `awards`, `links [{type, label, url, platform, youtubeId, channel, channelId, official, source}]` (type is `film`, `video`, `trailer`, `teaser`, `extra`, `soundtrack`, `playlist`, `channel` or `website`; `source` is `research` for links verified by hand from the creators' own channels, `submission` for submitted ones, `youtube-search` for automatic matches), `linkSuggestions` (unverified automatic matches, same shape), `fetchedAt`, `source` (`imdb` or `imdb-datasets`), and `submission {issue, by, at}` for titles added through the form. Fields a source doesn't provide are `null` or empty.
 
 ## Viewing locally
 

@@ -74,6 +74,13 @@ const LINK_TYPES = { film: 'Full film', video: 'Video', trailer: 'Trailer', teas
   soundtrack: 'Soundtrack', playlist: 'Playlist', channel: 'Channel', website: 'Website' };
 const LINK_ORDER = Object.keys(LINK_TYPES);
 
+function renderSuggestions(list) {
+  if (!list?.length) return '';
+  return `<details><summary class="muted">Unverified YouTube matches (${list.length})</summary>
+    <p class="muted">Found by automatic search but not uploaded by a credited channel, so they may be fan-made.</p>
+    <ul class="links">${list.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a> <span class="muted">· ${esc(l.channel)}</span></li>`).join('')}</ul></details>`;
+}
+
 function renderLinks(links) {
   if (!links?.length) return '';
   const sorted = [...links].sort((a, b) => LINK_ORDER.indexOf(a.type) - LINK_ORDER.indexOf(b.type));
@@ -102,6 +109,7 @@ function render(t) {
       <p class="muted">${esc(t.titleType)}${t.runtimeMinutes ? ' · ' + t.runtimeMinutes + ' min' : ''}${t.certificate ? ' · ' + esc(t.certificate) : ''} · ${esc(t.genres.join(', '))}</p>
       <p>${esc(t.plot) || '<span class="muted">No synopsis yet.</span>'}</p>
       ${renderLinks(t.links)}
+      ${renderSuggestions(t.linkSuggestions)}
       <dl>
         <dt>IMDb rating</dt><dd>${esc(rating)}</dd>
         <dt>Released</dt><dd>${esc(t.releaseDate || '—')}${t.releaseCountry ? ' (' + esc(t.releaseCountry) + ')' : ''}</dd>

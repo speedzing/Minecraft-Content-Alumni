@@ -5,10 +5,13 @@
 //   schedule  -> every open submission labelled "waiting" (titles not yet in IMDb's data)
 //   otherwise -> IMDB_INPUT or the command-line args (manual import, no issue)
 // Set DRY_RUN=true to look titles up without saving anything.
+// With YOUTUBE_API_KEY set, new titles are also searched on YouTube for official videos;
+// FIND_LINKS=true does the same for titles already in the database.
 // Writes results.json for scripts/reply.mjs and prints a summary.
 import fs from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { lookupTitles } from './imdb-datasets.mjs';
+import { findYouTubeLinks, hasYouTubeKey, linkType, mergeLinks } from './youtube-links.mjs';
 
 const DB_PATH = 'database/titles.json';
 const MAX_PER_SUBMISSION = 10;
@@ -23,6 +26,7 @@ const IMAGE_TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'we
 
 const dryRun = process.env.DRY_RUN === 'true';
 const event = process.env.GITHUB_EVENT_NAME || 'manual';
+const findLinks = process.env.FIND_LINKS === 'true';
 
 // Splits an issue-form body ("### IMDb links\n\n...") into its fields.
 function readForm(body) {
@@ -41,12 +45,6 @@ function readForm(body) {
 
 const MAX_LINKS = 20;
 const URL_PATTERN = /https?:\/\/[^\s)"'<>\]]+/g;
-
-const linkType = title => /trailer/i.test(title) ? 'trailer'
-  : /teaser/i.test(title) ? 'teaser'
-  : /soundtrack|\bost\b/i.test(title) ? 'soundtrack'
-  : /behind|making of|commentary|interview|bts|blooper/i.test(title) ? 'extra'
-  : 'video';
 
 function youtubeVideoId(u) {
   if (u.hostname === 'youtu.be') return u.pathname.slice(1) || null;
@@ -89,6 +87,30 @@ async function readLinks(text) {
   return (await Promise.all(urls.map(describeLink))).filter(Boolean);
 }
 
+const mdLink = l => `[${l.label.replace(/[[\]]/g, '')}](${l.url})`;
+
+// Searches YouTube for the title and folds the results into it; returns report lines.
+async function addSearchedLinks(title) {
+  if (!hasYouTubeKey()) return [];
+  try {
+    const { official, suggestions } = await findYouTubeLinks(title);
+    const freshOfficial = mergeLinks(title.links, official);
+    title.links = [...(title.links || []), ...freshOfficial];
+    const freshSuggestions = mergeLinks([...title.links, ...(title.linkSuggestions || [])], suggestions);
+    title.linkSuggestions = [...(title.linkSuggestions || []), ...freshSuggestions];
+    const out = [];
+    const videos = freshOfficial.filter(l => l.youtubeId);
+    if (videos.length) out.push(`  - Found ${videos.length} official YouTube video(s): ${videos.map(mdLink).join(', ')}`);
+    if (freshSuggestions.length) {
+      out.push(`  - Possible matches to review (not from a credited channel, so not shown as official): ${freshSuggestions.map(l => `${mdLink(l)} by ${l.channel}`).join('; ')}`);
+    }
+    if (!out.length) out.push('  - No new YouTube videos found.');
+    return out;
+  } catch (err) {
+    return [`  - YouTube search failed: ${err.message}`];
+  }
+}
+
 async function collectJobs() {
   if (event === 'issues') {
     const { issue } = JSON.parse(await fs.readFile(process.env.GITHUB_EVENT_PATH, 'utf8'));
@@ -129,7 +151,8 @@ const jobs = (await collectJobs()).map(job => {
 
 const db = JSON.parse(await fs.readFile(DB_PATH, 'utf8'));
 const known = new Set(db.titles.map(t => t.imdbId));
-const toLookUp = [...new Set(jobs.flatMap(j => j.ids).filter(id => dryRun || !known.has(id)))];
+// Dry runs look listed titles up again, unless the run is only about finding links.
+const toLookUp = [...new Set(jobs.flatMap(j => j.ids).filter(id => !known.has(id) || (dryRun && !findLinks)))];
 const found = toLookUp.length ? await lookupTitles(toLookUp) : new Map();
 
 const results = [];
@@ -141,16 +164,16 @@ for (const job of jobs) {
   const links = job.ids.length === 1 && job.extraLinks ? await readLinks(job.extraLinks) : [];
   if (!job.ids.length) lines.push('No IMDb title links found. Links look like `https://www.imdb.com/title/tt1234567/`.');
   for (const id of job.ids) {
-    if (!dryRun && known.has(id)) {
-      const existing = db.titles.find(t => t.imdbId === id);
-      const fresh = links.filter(l => !(existing.links || []).some(x => x.url === l.url));
-      if (fresh.length) {
-        existing.links = [...(existing.links || []), ...fresh];
-        totalChanged++;
-        lines.push(`- \`${id}\` is already in the database; added ${fresh.length} link(s) to **${existing.title}**.`);
-      } else {
-        lines.push(`- \`${id}\` is already in the database.`);
-      }
+    if (known.has(id) && (!dryRun || findLinks)) {
+      const stored = db.titles.find(t => t.imdbId === id);
+      const title = dryRun ? structuredClone(stored) : stored;
+      const linkCount = () => (title.links || []).length + (title.linkSuggestions || []).length;
+      const before = linkCount();
+      const fresh = mergeLinks(title.links, links);
+      title.links = [...(title.links || []), ...fresh];
+      const searchLines = findLinks ? await addSearchedLinks(title) : [];
+      if (!dryRun && linkCount() > before) totalChanged++;
+      lines.push(`- **${title.title}** (\`${id}\`) is already in the database${fresh.length ? `; added ${fresh.length} submitted link(s)` : ''}.`, ...searchLines);
       continue;
     }
     const record = found.get(id);
@@ -163,6 +186,7 @@ for (const job of jobs) {
     if (job.issue) title.submission = { issue: job.issue, by: job.user, at: new Date().toISOString() };
     if (job.ids.length === 1 && job.synopsis) title.plot = job.synopsis;
     title.links = links;
+    const searchLines = await addSearchedLinks(title);
     if (job.ids.length === 1 && job.poster && !dryRun) {
       try { title.poster = await savePoster(job.poster, id); }
       catch (err) { lines.push(`  - The poster could not be saved: ${err.message}.`); }
@@ -170,7 +194,7 @@ for (const job of jobs) {
     if (dryRun) console.log(JSON.stringify(title, null, 2));
     else { db.titles.push(title); known.add(id); }
     added++;
-    lines.push(`- ${dryRun ? 'Found' : 'Added'} **${title.title}** (${title.year ?? 'year unknown'}, ${title.titleType}): \`${id}\`, ${title.cast.length} cast${title.poster ? ', poster saved' : ''}${links.length ? `, ${links.length} link(s)` : ''}`);
+    lines.push(`- ${dryRun ? 'Found' : 'Added'} **${title.title}** (${title.year ?? 'year unknown'}, ${title.titleType}): \`${id}\`, ${title.cast.length} cast${title.poster ? ', poster saved' : ''}${links.length ? `, ${links.length} link(s)` : ''}`, ...searchLines);
   }
   if (job.ids.length > 1 && (job.poster || job.synopsis || job.extraLinks)) {
     lines.push('The poster, synopsis and links fields are only used when a submission has a single title.');
