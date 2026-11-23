@@ -61,11 +61,18 @@ export async function lookupTitles(ids) {
     const rating = ratings.find(r => r[0] === id);
     const credits = crew.find(r => r[0] === id) || [];
     const people = principals.filter(r => r[0] === id).sort((x, y) => Number(x[1]) - Number(y[1]));
-    const castRows = people.filter(r => CAST_ROLES[r[3]]);
-    const cast = castRows.map(r => ({
-      ...person(r[2]), role: CAST_ROLES[r[3]],
-      characters: val(r[5]) ? JSON.parse(r[5]) : [], creditedAs: null, photo: null,
-    }));
+    // One entry per person; someone listed several times keeps all their characters.
+    const castById = new Map();
+    for (const r of people.filter(r => CAST_ROLES[r[3]])) {
+      const entry = castById.get(r[2]) || { ...person(r[2]), role: CAST_ROLES[r[3]], characters: [], creditedAs: null, photo: null };
+      for (const c of val(r[5]) ? JSON.parse(r[5]) : []) if (!entry.characters.includes(c)) entry.characters.push(c);
+      castById.set(r[2], entry);
+    }
+    const cast = [...castById.values()];
+    const crewSeen = new Set();
+    const crewList = people.filter(r => !CAST_ROLES[r[3]])
+      .map(r => ({ ...person(r[2]), job: val(r[4]) || r[3].replace(/_/g, ' ') }))
+      .filter(c => !crewSeen.has(c.id + c.job) && crewSeen.add(c.id + c.job));
     const childEpisodes = episodes.filter(r => r[1] === id);
     const asEpisode = episodes.find(r => r[0] === id);
     const isSeries = type === 'tvSeries' || type === 'tvMiniSeries';
@@ -87,7 +94,7 @@ export async function lookupTitles(ids) {
       stars: cast.slice(0, 3).map(({ id: pid, name }) => ({ id: pid, name })),
       creators: [],
       cast,
-      crew: people.filter(r => !CAST_ROLES[r[3]]).map(r => ({ ...person(r[2]), job: val(r[4]) || r[3].replace(/_/g, ' ') })),
+      crew: crewList,
       studios: [], countries: [], languages: [], keywords: [], akas: [], filmingLocations: [],
       episodes: isSeries ? {
         total: childEpisodes.length,
