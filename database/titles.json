@@ -1,8 +1,8 @@
 {
   "name": "Minecraft Content Alumni — Title Database",
   "version": 1,
-  "updatedAt": "2026-11-23T13:19:44.165Z",
-  "count": 5,
+  "updatedAt": "2026-11-24T00:01:22.191Z",
+  "count": 6,
   "titles": [
     {
       "imdbId": "tt37975367",
@@ -1455,6 +1455,217 @@
           "channel": "bhavi",
           "official": true,
           "source": "research"
+        }
+      ]
+    },
+    {
+      "imdbId": "tt47930445",
+      "imdbUrl": "https://www.imdb.com/title/tt47930445/",
+      "title": "The Horrors of Respawning",
+      "originalTitle": "The Horrors of Respawning",
+      "titleType": "TV Episode",
+      "isSeries": false,
+      "isAdult": false,
+      "year": 2026,
+      "endYear": null,
+      "releaseDate": null,
+      "releaseCountry": null,
+      "runtimeMinutes": null,
+      "certificate": null,
+      "genres": [
+        "Action",
+        "Animation",
+        "Comedy"
+      ],
+      "interests": [],
+      "plot": null,
+      "rating": {
+        "value": 10,
+        "votes": 5
+      },
+      "metascore": null,
+      "poster": null,
+      "directors": [
+        {
+          "id": "nm17259067",
+          "name": "DidISayThat"
+        }
+      ],
+      "writers": [
+        {
+          "id": "nm17259067",
+          "name": "DidISayThat"
+        }
+      ],
+      "stars": [
+        {
+          "id": "nm17259067",
+          "name": "DidISayThat"
+        },
+        {
+          "id": "nm18974221",
+          "name": "JJGames"
+        },
+        {
+          "id": "nm17259075",
+          "name": "Whispy"
+        }
+      ],
+      "creators": [],
+      "cast": [
+        {
+          "id": "nm17259067",
+          "name": "DidISayThat",
+          "role": "Actor",
+          "characters": [
+            "Mark"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18974221",
+          "name": "JJGames",
+          "role": "Actor",
+          "characters": [
+            "JJ"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm17259075",
+          "name": "Whispy",
+          "role": "Actor",
+          "characters": [
+            "Whispy"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm13046110",
+          "name": "Dunk0",
+          "role": "Actor",
+          "characters": [
+            "Dunk0"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18974227",
+          "name": "PenguinkidLive",
+          "role": "Actor",
+          "characters": [
+            "PK"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18974228",
+          "name": "SimplySam",
+          "role": "Actor",
+          "characters": [
+            "Sam"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18974231",
+          "name": "Milkbonez",
+          "role": "Actor",
+          "characters": [
+            "Milk"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18974229",
+          "name": "TheTaciturnOne",
+          "role": "Actress",
+          "characters": [
+            "Tac"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm16382447",
+          "name": "AceThePlumber",
+          "role": "Actor",
+          "characters": [
+            "Ace"
+          ],
+          "creditedAs": null,
+          "photo": null
+        },
+        {
+          "id": "nm18974223",
+          "name": "Jadeyluu",
+          "role": "Actress",
+          "characters": [
+            "Jade"
+          ],
+          "creditedAs": null,
+          "photo": null
+        }
+      ],
+      "crew": [
+        {
+          "id": "nm17259067",
+          "name": "DidISayThat",
+          "job": "director"
+        },
+        {
+          "id": "nm17259067",
+          "name": "DidISayThat",
+          "job": "writer"
+        },
+        {
+          "id": "nm18974086",
+          "name": "Rivernose",
+          "job": "composer"
+        }
+      ],
+      "studios": [],
+      "countries": [],
+      "languages": [],
+      "keywords": [],
+      "akas": [],
+      "filmingLocations": [],
+      "episodes": null,
+      "series": {
+        "id": "tt47924862",
+        "title": null,
+        "season": null,
+        "episode": null
+      },
+      "videos": [],
+      "gallery": [],
+      "trivia": [],
+      "externalLinks": [],
+      "awards": null,
+      "fetchedAt": "2026-11-24T00:01:22.051Z",
+      "source": "imdb-datasets",
+      "submission": {
+        "issue": 2,
+        "by": "asiantilteduser-web",
+        "at": "2026-11-24T00:01:22.191Z"
+      },
+      "links": [
+        {
+          "type": "video",
+          "label": "THE HORRORS OF RESPAWNING",
+          "url": "https://www.youtube.com/watch?v=mjxqh47ssso",
+          "platform": "youtube",
+          "youtubeId": "mjxqh47ssso",
+          "channel": "DidISayThat",
+          "official": null,
+          "source": "submission"
         }
       ]
     }
