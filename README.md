@@ -14,8 +14,12 @@ This repository hosts the raw data store and a plain viewer page at https://spee
 | `scripts/imdb-datasets.mjs` | Looks titles up in IMDb's official daily datasets. Reusable as the future site's "Import from IMDb". |
 | `scripts/import-imdb.mjs` | Turns submissions or a list of IDs into database records. |
 | `scripts/youtube-links.mjs` | Searches YouTube for a title's official videos (needs the `YOUTUBE_API_KEY` secret). |
+| `scripts/apply-edit.mjs` | Applies an *Edit a title* issue to the database. |
+| `scripts/lib.mjs` | Shared helpers: reading issue forms, links and uploaded images. |
 | `scripts/reply.mjs` | Replies on, labels and closes submission issues. |
 | `.github/workflows/process-submissions.yml` | Runs the import on new submissions, daily for waiting ones, or manually. |
+| `.github/workflows/process-edits.yml` | Runs `apply-edit` for each edit issue and commits the result. |
+| `.github/ISSUE_TEMPLATE/edit.yml` | The edit form. |
 | `.github/ISSUE_TEMPLATE/submission.yml` | The submission form (IMDb links, optional YouTube/official links, poster and synopsis). |
 
 ## Submitting titles
@@ -36,6 +40,15 @@ To search for titles already listed: Actions tab → **Import from IMDb** → **
 
 Setting up the key: in Google Cloud Console create a project, enable **YouTube Data API v3**, create an API key under *Credentials* and restrict it to that API, then run `gh secret set YOUTUBE_API_KEY --repo speedzing/Minecraft-Content-Alumni` and paste the key when prompted.
 
+## Editing titles
+
+Anyone with a GitHub account can edit a title: press **Edit** next to it on the page. The form opens filled in with what's stored now; change any field and press **Create**. The edit is applied within a minute or two, committed to `main`, and the issue gets a reply listing what changed (or what couldn't be applied, such as a runtime that isn't a number).
+
+- An empty field is left unchanged; a single `-` clears it (the title can't be cleared).
+- People, cast, links and gallery are replaced by the list in the box, so deleting a line removes that entry. People and cast keep their IMDb ids when the name is unchanged; links keep their details when the URL is unchanged.
+- **New poster** and **Gallery** accept images dragged into the form (JPEG, PNG or WebP, up to 15 MB). Posters are saved to `database/posters/`, gallery images to `database/gallery/`.
+- Every edit is recorded in the title's `edits` list and is its own commit, so a bad edit can be undone with `git revert`.
+
 ## Importing directly
 
 Actions tab → **Import from IMDb** → **Run workflow**, paste IDs or links. Tick **dry run** to look titles up without saving.
@@ -50,7 +63,7 @@ IMDb's datasets are provided for personal and non-commercial use: https://develo
 
 ## Record fields
 
-Each entry in `titles[]` has: `imdbId`, `imdbUrl`, `title`, `originalTitle`, `titleType`, `isSeries`, `year`, `endYear`, `releaseDate`, `releaseCountry`, `runtimeMinutes`, `certificate`, `genres`, `interests`, `plot`, `rating {value, votes}`, `metascore`, `poster {url, width, height, caption, local}`, `directors`, `writers`, `stars`, `creators`, `cast [{id, name, role, characters, creditedAs, photo}]`, `crew [{id, name, job}]` (dataset imports), `studios`, `countries`, `languages`, `keywords`, `akas`, `filmingLocations`, `episodes`, `series`, `videos`, `gallery`, `trivia`, `externalLinks`, `awards`, `links [{type, label, url, platform, youtubeId, channel, channelId, official, source}]` (type is `film`, `video`, `trailer`, `teaser`, `extra`, `soundtrack`, `playlist`, `channel` or `website`; `source` is `research` for links verified by hand from the creators' own channels, `submission` for submitted ones, `youtube-search` for automatic matches), `linkSuggestions` (unverified automatic matches, same shape), `fetchedAt`, `source` (`imdb` or `imdb-datasets`), and `submission {issue, by, at}` for titles added through the form. Fields a source doesn't provide are `null` or empty.
+Each entry in `titles[]` has: `imdbId`, `imdbUrl`, `title`, `originalTitle`, `titleType`, `isSeries`, `year`, `endYear`, `releaseDate`, `releaseCountry`, `runtimeMinutes`, `certificate`, `genres`, `interests`, `plot`, `rating {value, votes}`, `metascore`, `poster {url, width, height, caption, local}`, `directors`, `writers`, `stars`, `creators`, `cast [{id, name, role, characters, creditedAs, photo}]`, `crew [{id, name, job}]` (dataset imports), `studios`, `countries`, `languages`, `keywords`, `akas`, `filmingLocations`, `episodes`, `series`, `videos`, `gallery`, `trivia`, `externalLinks`, `awards`, `links [{type, label, url, platform, youtubeId, channel, channelId, official, source}]` (type is `film`, `video`, `trailer`, `teaser`, `extra`, `soundtrack`, `playlist`, `channel` or `website`; `source` is `research` for links verified by hand from the creators' own channels, `submission` for submitted ones, `youtube-search` for automatic matches), `linkSuggestions` (unverified automatic matches, same shape), `edits [{issue, by, at, fields, reason}]` (edit history), `fetchedAt`, `source` (`imdb` or `imdb-datasets`), and `submission {issue, by, at}` for titles added through the form. Fields a source doesn't provide are `null` or empty.
 
 ## Viewing locally
 

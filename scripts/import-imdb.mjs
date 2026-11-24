@@ -11,80 +11,28 @@
 import fs from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { lookupTitles } from './imdb-datasets.mjs';
-import { findYouTubeLinks, hasYouTubeKey, linkType, mergeLinks } from './youtube-links.mjs';
+import { findYouTubeLinks, hasYouTubeKey, mergeLinks } from './youtube-links.mjs';
+import { DB_PATH, attachmentUrls, readIssueForm, readLinks, saveImage } from './lib.mjs';
 
-const DB_PATH = 'database/titles.json';
 const MAX_PER_SUBMISSION = 10;
 const GIVE_UP_DAYS = 7;
-const MAX_POSTER_BYTES = 15 * 1024 * 1024;
-const ATTACHMENT_PREFIXES = [
-  'https://github.com/user-attachments/',
-  'https://user-images.githubusercontent.com/',
-  'https://private-user-images.githubusercontent.com/',
-];
-const IMAGE_TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 
 const dryRun = process.env.DRY_RUN === 'true';
 const event = process.env.GITHUB_EVENT_NAME || 'manual';
 const findLinks = process.env.FIND_LINKS === 'true';
 
-// Splits an issue-form body ("### IMDb links\n\n...") into its fields.
 function readForm(body) {
-  if (!/^### /m.test(body)) return { links: body, poster: '', synopsis: '', extraLinks: '' };
-  const fields = {};
-  for (const part of body.split(/^### /m).slice(1)) {
-    const nl = part.indexOf('\n');
-    const text = part.slice(nl + 1).trim();
-    fields[part.slice(0, nl).trim().toLowerCase()] = text === '_No response_' ? '' : text;
-  }
+  const fields = readIssueForm(body);
+  if (!fields) return { links: body, poster: '', synopsis: '', extraLinks: '' };
   return {
     links: fields['imdb links'] || '', poster: fields.poster || '', synopsis: fields.synopsis || '',
     extraLinks: fields['youtube and official links'] || '',
   };
 }
 
-const MAX_LINKS = 20;
-const URL_PATTERN = /https?:\/\/[^\s)"'<>\]]+/g;
-
-function youtubeVideoId(u) {
-  if (u.hostname === 'youtu.be') return u.pathname.slice(1) || null;
-  return u.searchParams.get('v') || u.pathname.match(/^\/(?:shorts|live|embed)\/([\w-]{6,})/)?.[1] || null;
-}
-
-// Turns one submitted URL into a link record; YouTube links get their title and channel from oEmbed.
-async function describeLink(raw) {
-  let u;
-  try { u = new URL(raw); } catch { return null; }
-  const host = u.hostname.replace(/^(www|m)\./, '');
-  const isYouTube = host === 'youtube.com' || host === 'youtu.be' || host === 'music.youtube.com';
-  const link = { type: 'website', label: host, url: u.href, platform: isYouTube ? 'youtube' : host,
-    youtubeId: null, channel: null, official: null, source: 'submission' };
-  if (!isYouTube) return link;
-
-  const videoId = youtubeVideoId(u);
-  const list = u.searchParams.get('list');
-  if (videoId) Object.assign(link, { type: 'video', youtubeId: videoId, url: `https://www.youtube.com/watch?v=${videoId}` });
-  else if (list) Object.assign(link, { type: 'playlist', url: `https://www.youtube.com/playlist?list=${list}` });
-  else if (/^\/(@|channel\/|c\/|user\/)/.test(u.pathname)) {
-    link.type = 'channel';
-    link.label = link.channel = decodeURIComponent(u.pathname.split('/').filter(Boolean).pop()).replace(/^@/, '');
-    return link;
-  }
-  try {
-    const res = await fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(link.url)}`);
-    if (res.ok) {
-      const info = await res.json();
-      link.label = info.title;
-      link.channel = info.author_name;
-    }
-  } catch { /* keep the host as the label */ }
-  if (link.type === 'video') link.type = linkType(link.label);
-  return link;
-}
-
-async function readLinks(text) {
-  const urls = [...new Set(text.match(URL_PATTERN) || [])].slice(0, MAX_LINKS);
-  return (await Promise.all(urls.map(describeLink))).filter(Boolean);
+async function savePoster(url, id) {
+  const local = await saveImage(url, `database/posters/${id}`);
+  return { url, width: null, height: null, caption: null, local };
 }
 
 const mdLink = l => `[${l.label.replace(/[[\]]/g, '')}](${l.url})`;
@@ -124,26 +72,12 @@ async function collectJobs() {
   return [{ issue: null, user: null, body: process.env.IMDB_INPUT || process.argv.slice(2).join('\n'), firstRun: true }];
 }
 
-async function savePoster(url, id) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const type = (res.headers.get('content-type') || '').split(';')[0].trim();
-  const ext = IMAGE_TYPES[type];
-  if (!ext) throw new Error(`not a JPEG, PNG or WebP image (${type || 'unknown type'})`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  if (buf.length > MAX_POSTER_BYTES) throw new Error('larger than 15 MB');
-  const local = `database/posters/${id}.${ext}`;
-  await fs.mkdir('database/posters', { recursive: true });
-  await fs.writeFile(local, buf);
-  return { url, width: null, height: null, caption: null, local };
-}
-
 const jobs = (await collectJobs()).map(job => {
   const form = readForm(job.body);
   return {
     ...job,
     ids: [...new Set(form.links.match(/tt\d{7,10}/g) || [])].slice(0, MAX_PER_SUBMISSION),
-    poster: (form.poster.match(/https:\/\/[^\s)"'<>]+/g) || []).find(u => ATTACHMENT_PREFIXES.some(p => u.startsWith(p))) || null,
+    poster: attachmentUrls(form.poster)[0] || null,
     synopsis: form.synopsis.slice(0, 2000),
     extraLinks: form.extraLinks,
   };

@@ -35,6 +35,7 @@
   .links { list-style: none; padding: 0; margin: 8px 0; font-size: .9rem; }
   .links li { margin: 2px 0; }
   .links .kind { display: inline-block; min-width: 82px; color: #888; }
+  .edit { font-size: .8rem; font-weight: normal; margin-left: 6px; }
   .player iframe { width: 100%; max-width: 640px; aspect-ratio: 16 / 9; border: 0; display: block; margin-top: 6px; }
   @media (max-width: 560px) { .title { grid-template-columns: 1fr; } .title img { width: 140px; } }
 </style>
@@ -47,7 +48,7 @@
 <section id="about">
   <p><strong>Minecraft Content Alumni</strong> is an upcoming film database for Minecraft productions: films, series, animations and documentaries made in Minecraft, with pages for each production, its creators and studios, plus ratings, reviews and watchlists.</p>
   <p><strong>This is a pre-launch page, not the real site.</strong> It's a plain working list of the productions being collected before launch. The look here is deliberately basic and does not reflect the design of the finished website.</p>
-  <p>Know a Minecraft production that's on IMDb? Submit it below. It's added automatically from IMDb's official data and will be part of the database when the site launches.</p>
+  <p>Know a Minecraft production that's on IMDb? Submit it below. It's added automatically from IMDb's official data and will be part of the database when the site launches. Spotted something wrong or missing on a title? Anyone can fix it with its <strong>Edit</strong> button, including the poster, synopsis, credits, links and gallery.</p>
 </section>
 <section id="submit">
   <h2>Submit a title</h2>
@@ -60,7 +61,7 @@
     <button type="submit">Submit</button>
   </form>
   <p id="submit-status" role="status"></p>
-  <details><summary class="meta">Recent submissions</summary><ul id="recent"><li class="muted">Loading…</li></ul></details>
+  <details><summary class="meta">Recent submissions and edits</summary><ul id="recent"><li class="muted">Loading…</li></ul></details>
 </section>
 <input id="q" type="search" placeholder="Filter by title, person, genre, studio…" aria-label="Filter titles">
 <p class="meta">Raw data: <a href="database/titles.json">database/titles.json</a></p>
@@ -97,15 +98,43 @@ document.addEventListener('toggle', e => {
   d.insertAdjacentHTML('beforeend', `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(d.dataset.yt)}?autoplay=1" title="Video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`);
 }, true);
 
+// Opens the "Edit a title" form pre-filled with what's stored now. Empty fields mean "unchanged",
+// so if the link gets too long the biggest lists are left out rather than failing.
+function editUrl(t) {
+  const lines = list => (list || []).map(p => p.name).join('\n');
+  const fields = {
+    imdb: t.imdbUrl, name: t.title, synopsis: t.plot, type: t.titleType, year: t.year, end_year: t.endYear,
+    release_date: t.releaseDate, runtime: t.runtimeMinutes, genres: (t.genres || []).join(', '),
+    directors: lines(t.directors), writers: lines(t.writers), creators: lines(t.creators),
+    studios: lines(t.studios), stars: lines(t.stars),
+    cast: (t.cast || []).map(c => c.name + (c.characters?.length ? ' — ' + c.characters.join(' / ') : '')).join('\n'),
+    countries: (t.countries || []).join(', '), languages: (t.languages || []).join(', '),
+    links: (t.links || []).map(l => l.url).join('\n'),
+    gallery: (t.gallery || []).map(g => g.url).join('\n'),
+  };
+  const build = () => `https://github.com/${REPO}/issues/new?template=edit.yml&title=${encodeURIComponent('[Edit] ' + t.title)}`
+    + Object.entries(fields).filter(([, v]) => v !== null && v !== undefined && v !== '')
+      .map(([k, v]) => `&${k}=${encodeURIComponent(v)}`).join('');
+  for (const big of ['gallery', 'cast', 'links']) {
+    if (build().length <= 7500) break;
+    delete fields[big];
+  }
+  return build();
+}
+
 function render(t) {
   const yrs = t.year + (t.isSeries ? '–' + (t.endYear || '') : '');
   const rating = t.rating.value ? `${t.rating.value}/10 (${t.rating.votes.toLocaleString()} votes)` : 'Not yet rated';
   const cast = t.cast.map(c => `<li>${esc(c.name)}${c.characters.length ? ' — ' + esc(c.characters.join(' / ')) : ''}${c.creditedAs ? ' <span class="muted">(' + esc(c.creditedAs) + ')</span>' : ''}</li>`).join('');
-  const gallery = t.gallery.map(g => `<a href="${esc(g.url)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(g.url.replace('._V1_.jpg', '._V1_UY160_.jpg'))}" alt="${esc(g.caption)}" title="${esc(g.caption)}"></a>`).join('');
+  const gallery = t.gallery.map(g => {
+    const src = g.local || g.url.replace('._V1_.jpg', '._V1_UY160_.jpg');
+    return `<a href="${esc(g.local || g.url)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(src)}" alt="${esc(g.caption)}" title="${esc(g.caption)}"></a>`;
+  }).join('');
+  const lastEdit = t.edits?.at(-1);
   return `<article class="title" data-search="${esc(JSON.stringify(t).toLowerCase())}">
     ${t.poster?.local ? `<a href="${esc(t.poster.local)}" target="_blank"><img loading="lazy" src="${esc(t.poster.local)}" alt="${esc(t.title)} poster"></a>` : '<div class="muted">No poster</div>'}
     <div>
-      <h2>${esc(t.title)} <span class="muted">(${esc(yrs)})</span></h2>
+      <h2>${esc(t.title)} <span class="muted">(${esc(yrs)})</span> <a class="edit" href="${esc(editUrl(t))}" target="_blank" rel="noopener">Edit</a></h2>
       <p class="muted">${esc(t.titleType)}${t.runtimeMinutes ? ' · ' + t.runtimeMinutes + ' min' : ''}${t.certificate ? ' · ' + esc(t.certificate) : ''} · ${esc(t.genres.join(', '))}</p>
       <p>${esc(t.plot) || '<span class="muted">No synopsis yet.</span>'}</p>
       ${renderLinks(t.links)}
@@ -123,6 +152,7 @@ function render(t) {
         <dt>Country / language</dt><dd>${esc(t.countries.join(', '))} · ${esc(t.languages.join(', '))}</dd>
         ${t.keywords.length ? `<dt>Keywords</dt><dd>${esc(t.keywords.join(', '))}</dd>` : ''}
         ${t.submission ? `<dt>Submitted</dt><dd><a href="https://github.com/${REPO}/issues/${t.submission.issue}" target="_blank" rel="noopener">#${t.submission.issue}</a>${t.submission.by ? ' by ' + esc(t.submission.by) : ''}</dd>` : ''}
+        ${lastEdit ? `<dt>Last edited</dt><dd><a href="https://github.com/${REPO}/issues/${lastEdit.issue}" target="_blank" rel="noopener">#${lastEdit.issue}</a> by ${esc(lastEdit.by)} <span class="muted">(${esc(lastEdit.fields.join(', '))}${t.edits.length > 1 ? `; ${t.edits.length} edits in total` : ''})</span></dd>` : ''}
         <dt>IMDb</dt><dd><a href="${esc(t.imdbUrl)}" target="_blank" rel="noopener">${esc(t.imdbId)}</a></dd>
       </dl>
       <details><summary>Cast (${t.cast.length})</summary><ul>${cast}</ul></details>
@@ -165,11 +195,12 @@ function submissionState(issue) {
   return 'processing';
 }
 
-fetch(`https://api.github.com/repos/${REPO}/issues?labels=submission&state=all&per_page=8`)
+fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=30`)
   .then(r => r.ok ? r.json() : Promise.reject(r.status))
   .then(issues => {
+    issues = issues.filter(i => i.labels.some(l => l.name === 'submission' || l.name === 'edit')).slice(0, 10);
     document.getElementById('recent').innerHTML = issues.length
-      ? issues.map(i => `<li><a href="${esc(i.html_url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title.replace('[Submission] ', ''))} <span class="muted">· ${submissionState(i)}</span></li>`).join('')
+      ? issues.map(i => `<li><a href="${esc(i.html_url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title.replace(/^\[(Submission|Edit)\] /, (m, kind) => kind === 'Edit' ? 'Edit: ' : ''))} <span class="muted">· ${submissionState(i)}</span></li>`).join('')
       : '<li class="muted">None yet.</li>';
   })
   .catch(() => { document.getElementById('recent').innerHTML = '<li class="muted">Could not load submissions.</li>'; });

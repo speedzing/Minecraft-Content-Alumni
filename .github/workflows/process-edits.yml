@@ -1,0 +1,48 @@
+name: Apply title edits
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+concurrency:
+  group: title-database
+  cancel-in-progress: false
+
+jobs:
+  edit:
+    if: >-
+      contains(github.event.issue.labels.*.name, 'edit') ||
+      startsWith(github.event.issue.title, '[Edit]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply edit
+        run: node scripts/apply-edit.mjs
+
+      - name: Commit database changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          git add database
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Apply edit #$ISSUE_NUMBER"
+          git push
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" > /dev/null || true
+
+      - name: Reply on edit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/reply.mjs

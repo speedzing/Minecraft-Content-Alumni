@@ -1,0 +1,117 @@
+name: Edit a title
+description: Correct or add details for a title that's already in the Minecraft Content Alumni database.
+title: "[Edit] "
+labels: ["edit"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Opened from the **Edit** button, this form is filled in with what's stored now; change what you need and press **Create**.
+        The edit is applied automatically within a minute or two and this issue gets a reply listing what changed.
+
+        - Leave a field **empty** to keep it as it is.
+        - Type a single **-** to clear a field.
+        - List fields (people, cast, links, gallery) are replaced by what's in the box, so delete a line to remove it.
+  - type: input
+    id: imdb
+    attributes:
+      label: IMDb link
+      placeholder: https://www.imdb.com/title/tt48403578/
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Title
+  - type: textarea
+    id: synopsis
+    attributes:
+      label: Synopsis
+  - type: input
+    id: type
+    attributes:
+      label: Type
+      description: For example Movie, Short, TV Series, TV Mini Series, Video.
+  - type: input
+    id: year
+    attributes:
+      label: Year
+  - type: input
+    id: end_year
+    attributes:
+      label: End year
+      description: Series only.
+  - type: input
+    id: release_date
+    attributes:
+      label: Release date
+      placeholder: 2026-10-02
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime (minutes)
+  - type: input
+    id: genres
+    attributes:
+      label: Genres
+      description: Comma-separated.
+  - type: textarea
+    id: directors
+    attributes:
+      label: Directors
+      description: One name per line.
+  - type: textarea
+    id: writers
+    attributes:
+      label: Writers
+      description: One name per line.
+  - type: textarea
+    id: creators
+    attributes:
+      label: Creators
+      description: One name per line.
+  - type: textarea
+    id: studios
+    attributes:
+      label: Studios
+      description: One name per line.
+  - type: textarea
+    id: stars
+    attributes:
+      label: Stars
+      description: One name per line.
+  - type: textarea
+    id: cast
+    attributes:
+      label: Cast
+      description: "One person per line: Name — Character / Other character"
+  - type: input
+    id: countries
+    attributes:
+      label: Countries
+      description: Comma-separated.
+  - type: input
+    id: languages
+    attributes:
+      label: Languages
+      description: Comma-separated.
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: One per line. Full film, episodes, trailers, behind-the-scenes, soundtrack, channels, official websites.
+  - type: textarea
+    id: poster
+    attributes:
+      label: New poster
+      description: Drag a JPEG, PNG or WebP image here to replace the current poster.
+  - type: textarea
+    id: gallery
+    attributes:
+      label: Gallery
+      description: Current images are listed one per line; delete a line to remove one, or drag new images in to add them.
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for the edit
+      description: Optional, for example a source for the change.
